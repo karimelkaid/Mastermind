@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+
+
+class view_start_game{
+    - _playerName : String
+    - _gameMode : displayMode
+    - _numberOfRounds : Integer
+    - _pawnNumber : Integer
+    - _combinaisonNumber : Integer
+    - _tryNumber : Integer
+
+    + <<Create>>view_start_game()
+}
+
+class view_game{
+    - _roundScore
+
+    + <<Create>>view_game()
+}
+
+class view_end_game{
+    - _totalScore
+
+    + <<Create>>view_end_game()
+}
+
+@enduml
