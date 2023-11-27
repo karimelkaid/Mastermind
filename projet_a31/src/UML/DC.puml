@@ -1,27 +1,33 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+class view_start_game{
+    - _playerName : String
+    - _gameMode : displayMode
+    - _numberOfRounds : Integer
+    - _pawnNumber : Integer
+    - _combinaisonNumber : Integer
+    - _tryNumber : Integer
 
-class ArrayList {
-Object[] elementData
-size()
+    + <<Create>>view_start_game()
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class view_game{
+    - _roundScore
+
+    + <<Create>>view_game()
+}
+
+class view_end_game{
+    - _totalScore
+
+    + <<Create>>view_end_game()
 }
 
 @enduml
