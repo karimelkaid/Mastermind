@@ -7,7 +7,7 @@ skinparam classFontStyle Bold
 hide enum methods
 
 
-class view_start_game{
+class View_start_game{
     - _playerName : String
     - _gameMode : displayMode
     - _numberOfRounds : Integer
@@ -15,19 +15,42 @@ class view_start_game{
     - _combinaisonNumber : Integer
     - _tryNumber : Integer
 
-    + <<Create>>view_start_game()
+    + <<Create>>View_start_game()
 }
 
-class view_game{
+class View_game{
     - _roundScore
 
-    + <<Create>>view_game()
+    + <<Create>>View_game()
 }
 
-class view_end_game{
+class View_end_game{
     - _totalScore
 
-    + <<Create>>view_end_game()
+    + <<Create>>View_end_game()
 }
+
+
+class GameBoard
+{
+
+}
+
+class Combination{
+}
+
+class Pawn{
+
+}
+
+enum PawnColor{
+    RED
+    ORANGE
+    BLUE
+    GREEN
+}
+
+Pawn --"1\ncolor" PawnColor : has >
+Combination --"*\npawns" Pawn : contains >
 
 @enduml
