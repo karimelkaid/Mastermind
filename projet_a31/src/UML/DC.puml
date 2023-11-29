@@ -6,51 +6,122 @@ skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 hide enum methods
 
-
-class View_start_game{
-    - _playerName : String
-    - _gameMode : displayMode
-    - _numberOfRounds : Integer
-    - _pawnNumber : Integer
-    - _combinaisonNumber : Integer
-    - _tryNumber : Integer
-
-    + <<Create>>View_start_game()
+class Main{
+    + {static} main(args : String[])
 }
 
-class View_game{
-    - _roundScore
+' ICI METTRE QUE LE MAIN INSTANCIE LES CLASSES ETC...
 
-    + <<Create>>View_game()
+
+package view{
+    class View_start_game{
+
+        + <<Create>>View_start_game()
+
+        + setPlayerName(name: String)
+        + setGameMode(mode: displayMode)
+        + setNumberOfRounds(rounds: Integer)
+        + setPawnNumber(pawns: Integer): void
+        + setCombinaisonNumber(combinaisons: Integer)
+        + setTryNumber(tries: Integer)
+    }
+
+    class View_game implements Observer{
+        - _roundScore
+
+        + <<Create>>View_game()
+    }
+
+    class View_end_game{
+        - _totalScore
+
+        + <<Create>>View_end_game()
+    }
+
+    interface Observer{
+
+    }
 }
 
-class View_end_game{
-    - _totalScore
+package model{
+    class MastermindGame {
+      + startGame(): void
+      + makeMove(combination: Combination): Feedback
+      + isGameOver(): boolean
+      + getScore(): int
+    }
 
-    + <<Create>>View_end_game()
+    class MastermindSetting{
+        - _playerName : String
+        - _gameMode : displayMode
+        - _numberOfRounds : Integer
+        - _pawnNumber : Integer
+        - _combinaisonNumber : Integer
+        - _tryNumber : Integer
+
+        + <<Create>> MastermindSetting()
+    }
+
+    class Player{
+    }
+
+    class Round {
+      + calculateScore(): int
+    }
+
+    class Combination{
+    }
+
+
+    class Clue{
+    }
+
+    class Pawn{
+
+    }
+
+    enum PawnColor{
+        RED
+        ORANGE
+        BLUE
+        GREEN
+    }
+
+
 }
 
+package controller{
+    class MastermindController{
 
-class GameBoard
-{
-
-}
-
-class Combination{
-}
-
-class Pawn{
+    }
 
 }
 
-enum PawnColor{
-    RED
-    ORANGE
-    BLUE
-    GREEN
-}
+View_game --"1\n-mastermindController" MastermindController : send user request >
+
+
+MastermindController --"1\n-mastermindGame" MastermindGame : edit >
+
+MastermindGame --"1\n-settings" MastermindSetting : has >
+
+
+Observer --- MastermindGame : observes >
+
+
+
+MastermindGame --"*\n-rounds" Round : has >
+MastermindGame --"1\n-secretCombination" Combination : has >
+
+MastermindGame --"1\n-player" Player : register >
+
+
+
+
+Combination ---"*\n-clues" Clue : has >
 
 Pawn --"1\ncolor" PawnColor : has >
-Combination --"*\npawns" Pawn : contains >
+Combination ---"*\npawns" Pawn : contains >
+
+Round --> "*\n-attempts" Combination
 
 @enduml
