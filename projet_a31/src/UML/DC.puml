@@ -46,7 +46,7 @@ package view{
 package model{
     class MastermindGame {
       + startGame(): void
-      + makeMove(combination: Combination): Feedback
+      + makeMove(combination: Combination)
       + isGameOver(): boolean
       + getScore(): int
     }
@@ -62,9 +62,6 @@ package model{
         + <<Create>> MastermindSetting()
     }
 
-    class Player{
-    }
-
     class Round {
       + calculateScore(): int
     }
@@ -76,9 +73,6 @@ package model{
     class Clue{
     }
 
-    class Pawn{
-
-    }
 
     enum PawnColor{
         RED
@@ -112,15 +106,13 @@ Observer --- MastermindGame : observes >
 MastermindGame --"*\n-rounds" Round : has >
 MastermindGame --"1\n-secretCombination" Combination : has >
 
-MastermindGame --"1\n-player" Player : register >
 
 
 
 
 Combination ---"*\n-clues" Clue : has >
 
-Pawn --"1\ncolor" PawnColor : has >
-Combination ---"*\npawns" Pawn : contains >
+Combination ---"*\npawns" PawnColor : contains >
 
 Round --> "*\n-attempts" Combination
 
