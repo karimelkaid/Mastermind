@@ -10,6 +10,7 @@ public class Main {
         // Lancement partie
         mastermindGame.startGame();*/
 
+        // Enlever les boucles de préférence
         MastermindGame mastermindGame = new MastermindGame();
 
         while(recommencer)
@@ -26,7 +27,7 @@ public class Main {
 
                 for(int k=0; k<nbTentative && trouve == false; i++)
                 {
-                    round.tentative();
+                    round.tentative();  // Écrire com en dur pr tester
                     round.checkTentative();
                 }
 

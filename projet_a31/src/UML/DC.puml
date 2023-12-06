@@ -67,6 +67,20 @@ package model{
     }
 
     class Combination{
+        + generateClues()
+    }
+
+    interface GenerateCluesStrategy
+    {
+        + generateClues()
+    }
+
+    Combination o-- "1\n-strategy" GenerateCluesStrategy : choose >
+
+    class GenerateCluesEasy implements GenerateCluesStrategy
+    {
+        + <<Create>> GenerateCluesEasy()
+        + generateClues()
     }
 
 
