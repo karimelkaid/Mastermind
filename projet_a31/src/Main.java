@@ -1,14 +1,24 @@
+
+import model.MastermindGame;
+
 import java.awt.*;
 
 public class Main {
     public static void main(String[] args)
     {
-        /*// Choisir une combinaison secrète
+        MastermindGame.init("jawad", 10,4,4, 10);
+        MastermindGame.start();
+    }
+}
+
+/*//*
+/ Choisir une combinaison secrète
         MastermindGame mastermindGame = new MastermindGame();
         mastermindGame.init();  // La combinaison secrète sera directement appelé dans init
 
         // Lancement partie
-        mastermindGame.startGame();*/
+        mastermindGame.startGame();*//*
+
 
         MastermindGame mastermindGame = new MastermindGame();
 
@@ -44,3 +54,4 @@ public class Main {
 
     }
 }
+*/
