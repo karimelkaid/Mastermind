@@ -59,27 +59,27 @@ package model{
 
     interface GenerateCluesStrategy
     {
-        + generateClues()
+        + generateClues() : String
     }
 
-    Combination o-- "1\n-strategy" GenerateCluesStrategy : has >
+    Combination o-- "1\n-generateCluesStrategy" GenerateCluesStrategy : has >
 
     class GenerateCluesEasy implements GenerateCluesStrategy
     {
         + <<Create>> GenerateCluesEasy()
-        + generateClues()
+        + generateClues() : String
     }
 
     class GenerateCluesClassic implements GenerateCluesStrategy
     {
         + <<Create>> GenerateCluesClassic()
-        + generateClues()
+        + generateClues() : String
     }
 
     class GenerateCluesNumerical implements GenerateCluesStrategy
         {
             + <<Create>> GenerateCluesNumerical()
-            + generateClues()
+            + generateClues() : String
         }
 
 
@@ -134,3 +134,4 @@ Combination ---"*\npawns" PawnColor : contains >
 Round --> "*\n-attempts" Combination
 
 @enduml
+
