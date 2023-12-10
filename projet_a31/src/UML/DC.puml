@@ -40,6 +40,7 @@ package model{
     - _combinaisonNumber : Integer
     - _tryNumber : Integer
 
+    + <<Create>> MastermindGame( _playerName : String, _numberOfRounds : Integer, _pawnNumber : Integer, _combinaisonNumber:Integer, _tryNumber:Integer )
       + startGame()
       + makeSecretCombination()
       + isGameOver(): Boolean
@@ -51,15 +52,19 @@ package model{
     }
 
     class Combination{
-        + <<Create>> Combination()
+        - clues : String[]
+        + <<Create>> Combination(generateCluesStrategy:GenerateCluesStrategy, secretCombination:PawnColor[])
+        + setStrategy(generateCluesStrategy:GenerateCluesStrategy)
         + addPawn(pawn : PawnColor)
         + removePawn(pawn : PawnColor)
         + generateClues()
+        + showPawns()
+        + showClues()
     }
 
     interface GenerateCluesStrategy
     {
-        + generateClues() : String
+        + generateClues() : String[]
     }
 
     Combination o-- "1\n-generateCluesStrategy" GenerateCluesStrategy : has >
@@ -67,24 +72,26 @@ package model{
     class GenerateCluesEasy implements GenerateCluesStrategy
     {
         + <<Create>> GenerateCluesEasy()
-        + generateClues() : String
+        + generateClues() : String[]
     }
 
     class GenerateCluesClassic implements GenerateCluesStrategy
     {
         + <<Create>> GenerateCluesClassic()
-        + generateClues() : String
+        + generateClues() : String[]
     }
 
     class GenerateCluesNumerical implements GenerateCluesStrategy
-        {
-            + <<Create>> GenerateCluesNumerical()
-            + generateClues() : String
-        }
+    {
+        + <<Create>> GenerateCluesNumerical()
+        + generateClues() : String[]
+    }
 
 
     class Clue{
-        + <<Create>> Clue()
+        - _tab_clues : String[]
+        - _numerical_clues : String
+        + <<Create>> Clue(gameMode : String)
     }
 
 
@@ -124,10 +131,6 @@ MastermindGame --"*\n-rounds" Round : has >
 MastermindGame --"1\n-secretCombination" Combination : has >
 
 
-
-
-
-Combination ---"*\n-clues" Clue : has >
 
 Combination ---"*\npawns" PawnColor : contains >
 
