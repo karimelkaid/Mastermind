@@ -11,6 +11,7 @@ public class MastermindGame {
     private int _pawnNumber;
     private int _combinaisonNumber;
     private int _tryNumber;
+    private int _score;
 
     public MastermindGame(String _playerName, int _numberOfRounds, int _pawnNumber, int _combinaisonNumber, int _tryNumber){
         this._playerName = _playerName;
@@ -18,29 +19,30 @@ public class MastermindGame {
         this._pawnNumber = _pawnNumber;
         this._combinaisonNumber = _combinaisonNumber;
         this._tryNumber = _tryNumber;
+        this._score = 0;
     }
 
-    public static void init(String _playerName, int _numberOfRounds, int _pawnNumber, int _combinaisonNumber, int _tryNumber){
-        MastermindGame mastermindGame = new MastermindGame(_playerName, _numberOfRounds,_pawnNumber, _combinaisonNumber,_tryNumber);
-        System.out.println("initialisation de la game");
-    }
 
-    public static void start(){
+
+    public void start(){
+        // Affiche view start
+
+
         boolean restart = true;
         //while(restart)
-        //{
-            //for(int i=0; i<_numberOfRounds; i++) {
-        Round round = new Round();
-        List<String> Pawn = round.chooseSecretCombination();
-        for (int j=0; j<4; j++){
-            System.out.println("Pawn : "+Pawn.get(j));
-        }
+       // {
+        for(int i=0; i<_numberOfRounds; i++) {
+            Round round = new Round();
+            List<String> Pawn = round.chooseSecretCombination();
+            int roundScore = round.play();
+            this._score += roundScore;
+            System.out.println("Winround : " + roundScore);
+            }
+        // Affiche view end en lui transmettent le score et le nom du joueur
 
-            //}
 
 
-
-                restart=false;
+              //  restart=false;
 
 
                 // On crée la liste de "Tentative" qui correspond à une macnhe
@@ -62,10 +64,11 @@ public class MastermindGame {
 
     }
 
+
     public boolean isGameOver(){
         return true;
     }
-    public static int getScore(){
-        return 1;
+    public int getScore(){
+        return _score;
     }
 }

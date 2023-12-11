@@ -6,71 +6,92 @@ skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 hide enum methods
 
-class Main{
+class MastermindApp{
     + {static} main(args : String[])
 }
 
-' ICI METTRE QUE LE MAIN INSTANCIE LES CLASSES ETC...
+' ICI METTRE QUE LE MastermindApp INSTANCIE LES CLASSES ETC...
 
 
 package view{
     class View_start_game{
-
         + <<Create>>View_start_game()
-
-        + setPlayerName(name: String)
-        + setGameMode(mode: displayMode)
-        + setNumberOfRounds(rounds: Integer)
-        + setPawnNumber(pawns: Integer): void
-        + setCombinaisonNumber(combinaisons: Integer)
-        + setTryNumber(tries: Integer)
     }
 
-    class View_game implements Observer{
-        - _roundScore
-
-        + <<Create>>View_game()
+    class MastermindGameDisplay implements RoundObserver{
+        + <<Create>>MastermindGameDisplay()
     }
 
     class View_end_game{
-        - _totalScore
-
         + <<Create>>View_end_game()
     }
 
-    interface Observer{
+    interface RoundObserver{
 
     }
 }
 
 package model{
     class MastermindGame {
-      + startGame(): void
-      + makeMove(combination: Combination)
-      + isGameOver(): boolean
-      + getScore(): int
-    }
+    - _playerName : String
+    - _gameMode : String
+    - _numberOfRounds : Integer
+    - _pawnNumber : Integer
+    - _combinaisonNumber : Integer
+    - _tryNumber : Integer
 
-    class MastermindSetting{
-        - _playerName : String
-        - _gameMode : displayMode
-        - _numberOfRounds : Integer
-        - _pawnNumber : Integer
-        - _combinaisonNumber : Integer
-        - _tryNumber : Integer
-
-        + <<Create>> MastermindSetting()
+    + <<Create>> MastermindGame( _playerName : String, _numberOfRounds : Integer, _pawnNumber : Integer, _combinaisonNumber:Integer, _tryNumber:Integer )
+      + startGame()
+      + makeSecretCombination()
+      + isGameOver(): Boolean
+      + getScore(): Integer
     }
 
     class Round {
-      + calculateScore(): int
+      + calculateScore(): Integer
     }
 
     class Combination{
+        - clues : String[]
+        + <<Create>> Combination(generateCluesStrategy:GenerateCluesStrategy, secretCombination:PawnColor[])
+        + setStrategy(generateCluesStrategy:GenerateCluesStrategy)
+        + addPawn(pawn : PawnColor)
+        + removePawn(pawn : PawnColor)
+        + generateClues()
+        + showPawns()
+        + showClues()
+    }
+
+    interface GenerateCluesStrategy
+    {
+        + generateClues() : String[]
+    }
+
+    Combination o-- "1\n-generateCluesStrategy" GenerateCluesStrategy : has >
+
+    class GenerateCluesEasy implements GenerateCluesStrategy
+    {
+        + <<Create>> GenerateCluesEasy()
+        + generateClues() : String[]
+    }
+
+    class GenerateCluesClassic implements GenerateCluesStrategy
+    {
+        + <<Create>> GenerateCluesClassic()
+        + generateClues() : String[]
+    }
+
+    class GenerateCluesNumerical implements GenerateCluesStrategy
+    {
+        + <<Create>> GenerateCluesNumerical()
+        + generateClues() : String[]
     }
 
 
     class Clue{
+        - _tab_clues : String[]
+        - _numerical_clues : String
+        + <<Create>> Clue(gameMode : String)
     }
 
 
@@ -85,21 +106,24 @@ package model{
 }
 
 package controller{
-    class MastermindController{
+    class RoundController{
+        + <<Create>> RoundController(mastermindGame : MastermindGame)
 
+        + makeSecretCombination()
+        + addPawn(numCombination : Integer, pawn : PawnColor)
+        + removePawn(numCombination : Integer, pawn : PawnColor)
+        + generateClues(numCombination : Integer)
     }
-
 }
 
-View_game --"1\n-mastermindController" MastermindController : send user request >
+MastermindGameDisplay --"1\n-roundController" RoundController : send user request >
 
 
-MastermindController --"1\n-mastermindGame" MastermindGame : edit >
-
-MastermindGame --"1\n-settings" MastermindSetting : has >
+RoundController --"1\n-round" Round : edit >
 
 
-Observer --- MastermindGame : observes >
+
+RoundObserver ---"1\n-round" Round : observes >
 
 
 
@@ -108,12 +132,9 @@ MastermindGame --"1\n-secretCombination" Combination : has >
 
 
 
-
-
-Combination ---"*\n-clues" Clue : has >
-
 Combination ---"*\npawns" PawnColor : contains >
 
 Round --> "*\n-attempts" Combination
 
 @enduml
+

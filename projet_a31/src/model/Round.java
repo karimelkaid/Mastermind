@@ -13,6 +13,10 @@ public class Round {
 
 
     }
+    public int play() {
+        int score = 90;
+        return score;
+    }
 
 
 }

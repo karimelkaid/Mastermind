@@ -6,8 +6,9 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args)
     {
-        /*MastermindGame.init("jawad", 10,4,4, 10);
-        MastermindGame.start();*/
+        MastermindGame mastermindGame = new MastermindGame("jawad", 10,4,4, 10);
+        mastermindGame.start();
+        System.out.println(mastermindGame.getScore());
 
         GenerateCluesStrategy generateCluesStrategy = new GenerateCluesEasy();
         PawnColor[] secretCombination = {PawnColor.ORANGE,PawnColor.BLUE, PawnColor.RED, PawnColor.GREEN};
