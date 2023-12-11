@@ -30,11 +30,11 @@ public class MastermindGame {
         //while(restart)
         //{
             //for(int i=0; i<_numberOfRounds; i++) {
-                Round round = new Round();
-                List<String> Pawn = round.chooseSecretCombination();
-                for (int j=0; j<4; j++){
-                    System.out.println("Pawn : "+Pawn.get(j));
-                }
+        Round round = new Round();
+        List<String> Pawn = round.chooseSecretCombination();
+        for (int j=0; j<4; j++){
+            System.out.println("Pawn : "+Pawn.get(j));
+        }
 
             //}
 
@@ -59,11 +59,6 @@ public class MastermindGame {
 //                // Manche terminé, vidage de la liste pour la prochaine partie
 //                round.clearAttempts();
             //}
-
-    }
-
-    public static void makeMove(){
-
 
     }
 
