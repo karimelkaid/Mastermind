@@ -31,13 +31,23 @@ public class MastermindGame {
         boolean restart = true;
         //while(restart)
        // {
-        for(int i=0; i<_numberOfRounds; i++) {
+
+
+        //for(int i=0; i<_numberOfRounds; i++) {
+
+            // Affiche view round
             Round round = new Round();
             List<String> Pawn = round.chooseSecretCombination();
             int roundScore = round.play();
             this._score += roundScore;
             System.out.println("Winround : " + roundScore);
-            }
+    //}
+        // Fait moi ca sans boucle for
+
+
+
+
+
         // Affiche view end en lui transmettent le score et le nom du joueur
 
 

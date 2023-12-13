@@ -6,16 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="54bdba3b-1d06-483f-8fc8-93dfb9a0b04b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/UML/DC.puml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/UML/DC.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/model/Combination.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/Combination.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/model/MastermindGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/MastermindGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/model/teste.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/view/view_start.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/view/view_start.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet_a31/src/model/MastermindGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/MastermindGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Round.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/Round.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/view/view_start.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/view/View_start.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +16,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -89,7 +81,8 @@
       <workItem from="1701852469771" duration="20000" />
       <workItem from="1701852569425" duration="1627000" />
       <workItem from="1701858118150" duration="4793000" />
-      <workItem from="1702307246880" duration="3112000" />
+      <workItem from="1702307246880" duration="4344000" />
+      <workItem from="1702479153838" duration="707000" />
     </task>
     <servers />
   </component>
