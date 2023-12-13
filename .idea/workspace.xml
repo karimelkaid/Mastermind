@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="54bdba3b-1d06-483f-8fc8-93dfb9a0b04b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet_a31/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet_a31/src/model/MastermindGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/MastermindGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Round.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/Round.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,11 +84,27 @@
       <workItem from="1701852569425" duration="1627000" />
       <workItem from="1701858118150" duration="4793000" />
       <workItem from="1702307246880" duration="4344000" />
-      <workItem from="1702479153838" duration="707000" />
+      <workItem from="1702479153838" duration="5441000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/projet_a31/src/Main.java</url>
+          <line>9</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/projet_a31/src/model/Round.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

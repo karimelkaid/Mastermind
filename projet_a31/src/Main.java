@@ -6,7 +6,17 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args)
     {
-        MastermindGame mastermindGame = new MastermindGame("jawad", 10,4,4, 10);
+        Round round = new Round(4,4,4);
+        round.play();
+
+
+
+
+
+
+
+
+        /*MastermindGame mastermindGame = new MastermindGame("jawad", 10,4,4, 10);
         mastermindGame.start();
         System.out.println(mastermindGame.getScore());
 
@@ -27,7 +37,7 @@ public class Main {
         combination.setStrategy( new GenerateCluesNumerical() );
 
         combination.generateClues();
-        combination.showClues();
+        combination.showClues();*/
 
     }
 }

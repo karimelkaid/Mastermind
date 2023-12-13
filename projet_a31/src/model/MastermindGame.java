@@ -36,11 +36,11 @@ public class MastermindGame {
         //for(int i=0; i<_numberOfRounds; i++) {
 
             // Affiche view round
-            Round round = new Round();
+            /*Round round = new Round();
             List<String> Pawn = round.chooseSecretCombination();
             int roundScore = round.play();
             this._score += roundScore;
-            System.out.println("Winround : " + roundScore);
+            System.out.println("Winround : " + roundScore);*/
     //}
         // Fait moi ca sans boucle for
 
