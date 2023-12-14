@@ -22,7 +22,8 @@ public class Round {
         this.pawnNumber=pawnNumber;
         this.tryNumber=tryNumber;
         this.combinaisonNumber=combinaisonNumber;
-        for(PawnColor color : PawnColor.values()){
+        for(PawnColor color : PawnColor.values())
+        {
             randomTab.add(color);
             System.out.println(color);
         }
@@ -47,6 +48,7 @@ public class Round {
         return secretCombination;
     }*/
     public void nextTentative() {
+        attemptNumber = 4;      // Pour tester le notifyRoundFinish (ça marche)
         if(attemptNumber<tryNumber) {
             System.out.println("Try number : " + attemptNumber);
             if (verifyCombination(attempts.get(attemptNumber-1)))
