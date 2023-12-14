@@ -1,5 +1,6 @@
 package model;
 
+import view.MastermindGameDisplay;
 import view.RoundObserver;
 
 import java.util.*;
@@ -11,7 +12,7 @@ public class Round {
     private int combinaisonNumber;
     private int tryNumber;
     private int attemptNumber;
-    private Combination attempt;     // ICI Changer pour plus tard
+    private List<Combination> attempts;
 
     private PawnColor[] secretCombination;
     private List<PawnColor> randomTab= new ArrayList<PawnColor>();
@@ -25,9 +26,12 @@ public class Round {
             randomTab.add(color);
             System.out.println(color);
         }
+
+        this.attempts = new ArrayList<>();
         this.attemptNumber=1;
         //this.secretCombination=this.generateCombination();
         this.secretCombination= new PawnColor[]{PawnColor.BLUE, PawnColor.GREEN, PawnColor.RED, PawnColor.ORANGE};
+
         this.roundObservers= new ArrayList<>();
     }
     /*public Combination generateCombination(){
@@ -45,12 +49,15 @@ public class Round {
     public void nextTentative() {
         if(attemptNumber<tryNumber) {
             System.out.println("Try number : " + attemptNumber);
-            if (verifyCombination(attempt)) {
+            if (verifyCombination(attempts.get(attemptNumber-1)))
+            {
                 System.out.println("Round won!");
                 notifyRoundFinish();
-                endBool = true;
-            } else {
-               // attempt.showClues();
+                endBool = true; // Je pense qu'il ne va pas servir
+            }
+            else
+            {
+               // attempts.showClues();
                 attemptNumber++;
             }
         }
@@ -77,20 +84,30 @@ public class Round {
             roundObserver.updateRoundFinish();
         }
     }
+
+    public void addObserver( RoundObserver roundObserver )
+    {
+        this.roundObservers.add(roundObserver);
+    }
     public void inputCombination(Combination combi) {
-        attempt=combi;
+        attempts.add(combi);
     }
 
     public int play() {
+        RoundObserver roundObserver1 = new MastermindGameDisplay();
+        this.roundObservers.add(roundObserver1);
+
         //Creer combinaison (la bonne)
         //Appeler next tentative
         GenerateCluesStrategy generateCluesStrategy = new GenerateCluesNumerical();
-        PawnColor[] secetCombinationTest = {PawnColor.BLUE, PawnColor.GREEN, PawnColor.RED, PawnColor.ORANGE};
-        Combination combination = new Combination(generateCluesStrategy,secetCombinationTest);
+        Combination combination = new Combination(generateCluesStrategy,this.secretCombination);
         combination.addPawn(PawnColor.BLUE);
         combination.addPawn(PawnColor.GREEN);
         combination.addPawn(PawnColor.RED);
         combination.addPawn(PawnColor.ORANGE);
+
+        // Ajout de la combinaison
+        inputCombination(combination);
 
         // Génération des indices
         combination.generateClues();
@@ -116,7 +133,7 @@ public class Round {
                 System.out.println("choice is: " + randomTab.get(choice));  // Output user input
                 tabCombination[i]=randomTab.get(choice);
             }
-            Combination attempt = new Combination()
+            Combination attempts = new Combination()
         }*/
 }
 
