@@ -1,14 +1,55 @@
+
+import model.*;
+
 import java.awt.*;
 
 public class Main {
     public static void main(String[] args)
     {
-        /*// Choisir une combinaison secrète
+        Round round = new Round(4,4,4);
+        round.play();
+
+
+
+
+
+
+
+
+        /*MastermindGame mastermindGame = new MastermindGame("jawad", 10,4,4, 10);
+        mastermindGame.start();
+        System.out.println(mastermindGame.getScore());
+
+        GenerateCluesStrategy generateCluesStrategy = new GenerateCluesEasy();
+        PawnColor[] secretCombination = {PawnColor.ORANGE,PawnColor.BLUE, PawnColor.RED, PawnColor.GREEN};
+        Combination combination = new Combination(generateCluesStrategy,secretCombination);
+        combination.addPawn(PawnColor.ORANGE);
+        combination.addPawn(PawnColor.BLUE);
+        combination.addPawn(PawnColor.GREEN);
+        combination.addPawn(PawnColor.RED);
+
+        combination.showPawns();
+        // Génération des indices
+        combination.generateClues();
+        // Affichage des indices
+        combination.showClues();
+
+        combination.setStrategy( new GenerateCluesNumerical() );
+
+        combination.generateClues();
+        combination.showClues();*/
+
+    }
+}
+
+/*
+        // Choisir une combinaison secrète
         MastermindGame mastermindGame = new MastermindGame();
         mastermindGame.init();  // La combinaison secrète sera directement appelé dans init
 
         // Lancement partie
-        mastermindGame.startGame();*/
+        mastermindGame.startGame();*//*
+
 
         // Enlever les boucles de préférence
         MastermindGame mastermindGame = new MastermindGame();
@@ -45,3 +86,4 @@ public class Main {
 
     }
 }
+*/

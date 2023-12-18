@@ -1,9 +1,14 @@
 package model;
 
 public class Clue {
-    PawnColor pawn;
-    public Clue(PawnColor pawn)
+    private String clue_color;
+    public Clue(String clue_color)
     {
-        this.pawn = pawn;
+        this.clue_color = clue_color;
+    }
+
+    public String getClue_color()
+    {
+        return this.clue_color;
     }
 }
