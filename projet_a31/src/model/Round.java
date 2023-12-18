@@ -126,6 +126,11 @@ public class Round {
         return 90;
     }
 
+    public Combination getCombination(int numCombination) {
+        Combination res = this.attempts.get(numCombination);
+        return res;
+    }
+
    /* public void startRound(){
         for(int i = 1; i<tryNumber;i--){
             System.out.println("Try number : "+i);

@@ -7,13 +7,9 @@
     <list default="true" id="54bdba3b-1d06-483f-8fc8-93dfb9a0b04b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/UML/DC.puml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/UML/DC.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/model/Clue.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/model/Combination.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/Combination.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/UML/DC.puml" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/UML/DC.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Clue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Combination.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/Combination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/model/Round.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/Round.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet_a31/src/controller/RoundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/controller/RoundController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Round.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/Round.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/view/RoundObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/view/RoundObserver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

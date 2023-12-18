@@ -20,6 +20,8 @@ package view{
 
     class MastermindGameDisplay implements RoundObserver{
         + <<Create>>MastermindGameDisplay()
+        + updateRoundFinish()
+        + updateCombination(numCombination:Integer, pawnColor:PawnColor)
     }
 
     class View_end_game{
@@ -27,7 +29,8 @@ package view{
     }
 
     interface RoundObserver{
-
+        + updateRoundFinish()
+        + updateCombination(numCombination:Integer, pawnColor:PawnColor)
     }
 }
 
@@ -48,19 +51,40 @@ package model{
     }
 
     class Round {
-      + calculateScore(): Integer
+      - tryNumber : Integer
+      - attemptNumber : Integer
+
+      + <<Create>> Round(pawnNumber : Integer,combinationNumber:Integer, tryNumber:Integer)
+
+      + nextTentative()
+      + verifyCombination(attempt : Combination) : Boolean
+      + notifyRoundFinish()
+      + addRoundObserver(roundObserver: RoundObserver)
+      + inputCombination(combination : Combination)
+      + play() : Integer
     }
+
+    Round --"1\n-secretCombination" PawnColor : has >
+
 
     class Combination{
         - clues : String[]
-        + <<Create>> Combination(generateCluesStrategy:GenerateCluesStrategy, secretCombination:PawnColor[])
+        - numCombination : Integer
+        + <<Create>> Combination(generateCluesStrategy:GenerateCluesStrategy, secretCombination:PawnColor[], numCombination:Integer)
+        + addRoundObserver(roundObserver : RoundObserver)
+        + notifyAddPawn(addedPawn : PawnColor)
         + setStrategy(generateCluesStrategy:GenerateCluesStrategy)
         + addPawn(pawn : PawnColor)
         + removePawn(pawn : PawnColor)
+        + getPawn(i:Integer) : PawnColor
         + generateClues()
         + showPawns()
         + showClues()
     }
+
+    Combination --"1\n-secretCombination" PawnColor : has >
+    Combination --"*\n-roundObservers" RoundObserver : has >
+
 
     interface GenerateCluesStrategy
     {
@@ -72,19 +96,19 @@ package model{
     class GenerateCluesEasy implements GenerateCluesStrategy
     {
         + <<Create>> GenerateCluesEasy()
-        + generateClues() : String[]
+        + generateClues(pawns: PawnColor[], secretCombination: PawnColor[]) : String[]
     }
 
     class GenerateCluesClassic implements GenerateCluesStrategy
     {
         + <<Create>> GenerateCluesClassic()
-        + generateClues() : String[]
+        + generateClues(pawns: PawnColor[], secretCombination: PawnColor[]) : String[]
     }
 
     class GenerateCluesNumerical implements GenerateCluesStrategy
     {
         + <<Create>> GenerateCluesNumerical()
-        + generateClues() : String[]
+        + generateClues(pawns: PawnColor[], secretCombination: PawnColor[]) : String[]
     }
 
     enum PawnColor{
