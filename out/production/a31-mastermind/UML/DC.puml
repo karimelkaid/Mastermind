@@ -87,14 +87,6 @@ package model{
         + generateClues() : String[]
     }
 
-
-    class Clue{
-        - _tab_clues : String[]
-        - _numerical_clues : String
-        + <<Create>> Clue(gameMode : String)
-    }
-
-
     enum PawnColor{
         RED
         ORANGE

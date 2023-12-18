@@ -95,6 +95,7 @@ public class Round {
         attempts.add(combi);
     }
 
+    // Return le score du round
     public int play() {
         RoundObserver roundObserver1 = new MastermindGameDisplay();
         this.roundObservers.add(roundObserver1);

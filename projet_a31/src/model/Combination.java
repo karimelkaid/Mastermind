@@ -8,7 +8,7 @@ import java.util.List;
 public class Combination {
     // Tableau de 4 pions + 4 indoces
 
-    private PawnColor[] tab_pawn;
+    private PawnColor[] pawns;
     //private Clue[] tab_clue;
     private String[] clues;
 
@@ -21,7 +21,7 @@ public class Combination {
     public Combination(GenerateCluesStrategy generateCluesStrategy, PawnColor[] secretCombination, int numCombination)
     {
         // REMPLACER LE 4 PAR UN PARAMÈTRE DES SETTINGS (que je vais passer en paramètre)
-        tab_pawn = new PawnColor[4];
+        pawns = new PawnColor[4];
         //tab_clue = new Clue[4];
 
         clues = new String[4];
@@ -52,9 +52,9 @@ public class Combination {
         for(int i=0; i<4 && stop==false; i++)
         {
             // Dès que je vois une case vide, je place le pion
-            if( tab_pawn[i] == null )
+            if( pawns[i] == null )
             {
-                tab_pawn[i] = pawnColor;
+                pawns[i] = pawnColor;
                 stop = true;
             }
         }
@@ -68,18 +68,18 @@ public class Combination {
     {
         if( this.generateCluesStrategy instanceof GenerateCluesNumerical )   // Si mode de jeu numérique
         {
-            clues = generateCluesStrategy.generateClues(this.tab_pawn, secretCombination);
+            clues = generateCluesStrategy.generateClues(this.pawns, secretCombination);
         }
         else
         {
             //clues_not_numerical = generateCluesStrategy.generateClues(this.tab_pawn, secretCombination);
-            clues = generateCluesStrategy.generateClues(this.tab_pawn, secretCombination);
+            clues = generateCluesStrategy.generateClues(this.pawns, secretCombination);
         }
     }
 
     public PawnColor getPawn(int i) {
         PawnColor res;
-        res = tab_pawn[i];
+        res = pawns[i];
         return res;
     }
 
@@ -88,7 +88,7 @@ public class Combination {
         // Affichage de la combinaison
         for(int i=0; i<4; i++)
         {
-            System.out.println(tab_pawn[i]);
+            System.out.println(pawns[i]);
         }
     }
 
