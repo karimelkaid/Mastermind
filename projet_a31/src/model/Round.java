@@ -102,7 +102,9 @@ public class Round {
         //Creer combinaison (la bonne)
         //Appeler next tentative
         GenerateCluesStrategy generateCluesStrategy = new GenerateCluesNumerical();
-        Combination combination = new Combination(generateCluesStrategy,this.secretCombination);
+        Combination combination = new Combination(generateCluesStrategy,this.secretCombination,0);
+        combination.addRoundObserver(roundObserver1);
+
         combination.addPawn(PawnColor.BLUE);
         combination.addPawn(PawnColor.GREEN);
         combination.addPawn(PawnColor.RED);

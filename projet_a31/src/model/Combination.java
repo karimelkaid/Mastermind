@@ -1,5 +1,10 @@
 package model;
 
+import view.RoundObserver;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Combination {
     // Tableau de 4 pions + 4 indoces
 
@@ -9,8 +14,11 @@ public class Combination {
 
     private GenerateCluesStrategy generateCluesStrategy;
     private PawnColor[] secretCombination;  // Besoin pour générer les indices (en comparant avec la combinaison actuelle)
+    private List<RoundObserver> roundObservers;
+    private int numCombination;
 
-    public Combination(GenerateCluesStrategy generateCluesStrategy, PawnColor[] secretCombination)
+    // numCombination pour pouvoir notifier le RoundObserver en lui passant la bonne combinaison (voir méthode updateAddPawn)
+    public Combination(GenerateCluesStrategy generateCluesStrategy, PawnColor[] secretCombination, int numCombination)
     {
         // REMPLACER LE 4 PAR UN PARAMÈTRE DES SETTINGS (que je vais passer en paramètre)
         tab_pawn = new PawnColor[4];
@@ -21,6 +29,21 @@ public class Combination {
 
         this.generateCluesStrategy = generateCluesStrategy;
         this.secretCombination = secretCombination;
+        this.roundObservers = new ArrayList<>();
+        this.numCombination = numCombination;
+    }
+
+    public void notifyAddPawn(PawnColor pawnColorAdd)
+    {
+        for(RoundObserver roundObserver : roundObservers)
+        {
+            roundObserver.updateCombination(this.numCombination, pawnColorAdd);
+        }
+    }
+
+    public void addRoundObserver( RoundObserver roundObserver )
+    {
+        this.roundObservers.add(roundObserver);
     }
 
     public void addPawn(PawnColor pawnColor)
@@ -35,6 +58,9 @@ public class Combination {
                 stop = true;
             }
         }
+
+        // Notification des RoundObservers pour modifier la vue en conséquence
+        notifyAddPawn(pawnColor);
     }
 
     // Générer les indices

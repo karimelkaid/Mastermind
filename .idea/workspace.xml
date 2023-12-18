@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54bdba3b-1d06-483f-8fc8-93dfb9a0b04b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/MastermindGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/MastermindGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/model/Combination.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/Combination.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/model/Round.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/Round.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/view/MastermindGameDisplay.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/view/MastermindGameDisplay.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/view/RoundObserver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/a31-mastermind/view/RoundObserver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/a31-mastermind/view/view_start.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Combination.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/Combination.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Round.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/Round.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet_a31/src/view/MastermindGameDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/view/MastermindGameDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet_a31/src/view/RoundObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/view/RoundObserver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,30 +36,34 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="2ZA6JWM1tuzLhmzILRZCp2RlwVS" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21 (2)&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.language&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "openjdk-21 (2)",
+    "last_opened_file_path": "/home/kelkaid/Bureau/Modules_2eme_Annee/BUT_S3/A31/a31-mastermind",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "configurable.group.language",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="model" />
@@ -85,26 +96,11 @@
       <workItem from="1701858118150" duration="4793000" />
       <workItem from="1702307246880" duration="4344000" />
       <workItem from="1702479153838" duration="5441000" />
+      <workItem from="1702885576159" duration="1291000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/projet_a31/src/Main.java</url>
-          <line>9</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/projet_a31/src/model/Round.java</url>
-          <line>65</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
