@@ -5,39 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54bdba3b-1d06-483f-8fc8-93dfb9a0b04b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Rendu 1.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/a31-mastermind.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/UML/DC.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/Clue.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/Combination.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/GenerateCluesEasy.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/GenerateCluesNumerical.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/GenerateCluesStrategy.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/MastermindGame.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/PawnColor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/model/Round.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/view/MastermindGameDisplay.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/view/RoundObserver.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/view/View_start$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/a31-mastermind/view/View_start.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projet_a31/src/model/GenerateCluesNumerical.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projet_a31/src/model/MastermindGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projet_a31/src/model/Round.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projet_a31/src/view/MastermindGameDisplay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projet_a31/src/view/RoundObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projet_a31/src/view/View_start.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/UML/DC.puml" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/UML/DC.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Clue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/Clue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/Combination.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/Combination.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/GenerateCluesEasy.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/GenerateCluesEasy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/model/GenerateCluesStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet_a31/src/model/GenerateCluesStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet_a31/src/view/view_start.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +86,7 @@
       <workItem from="1701858118150" duration="4793000" />
       <workItem from="1702307246880" duration="4344000" />
       <workItem from="1702479153838" duration="5441000" />
-      <workItem from="1702885576159" duration="1590000" />
+      <workItem from="1702885576159" duration="1291000" />
     </task>
     <servers />
   </component>
