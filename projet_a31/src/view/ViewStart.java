@@ -7,6 +7,7 @@ public class ViewStart extends JFrame {
 
     JPanel pnl_main = new JPanel(new GridBagLayout());     // Déclaré en dehors du constructeur pour pouvoir sauvegarder les informations et revenir dessus plus tard si l'utilisateur change de fenêtre
     JPanel pnl_moreOptions = new JPanel(new GridBagLayout());
+    JButton buttonMoreOptions = new JButton("More options");
 
     public ViewStart() {
         super("Game Start");
@@ -14,6 +15,25 @@ public class ViewStart extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Pour centrer la fenêtre sur l'écran
 
+        // Configuration du topPanel
+        configuration_top_panel();
+
+        // Configuration du pnl_main
+        configuration_main_panel();
+
+        // Configuration du bottomPanel
+        configuration_bottom_panel();
+
+        // Configuration du pnl_moreOptions
+        configuration_more_options_panel();
+
+
+        // Affichage de la fenêtre
+        setVisible(true);
+    }
+
+    public void configuration_main_panel()
+    {
         // Je veux un arrière plan de cette couleur #003366
         pnl_main.setBackground(new Color(0, 51, 102));
         //pnl_main.setBackground(Color.YELLOW);
@@ -39,19 +59,6 @@ public class ViewStart extends JFrame {
         JLabel labelPlayerName = new JLabel("Player name");
         JTextField textField = new JTextField(10);
         textField.setPreferredSize(new Dimension(150, 24));
-
-        // Création du bouton "More options"
-        JButton buttonMoreOptions = new JButton("More options");
-        buttonMoreOptions.setPreferredSize(new Dimension(120, 30));
-
-        // Création du pnl_main pour le bouton "More options" et positionnement en haut à droite
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(Color.BLUE);
-        topPanel.add(buttonMoreOptions, BorderLayout.EAST);
-        topPanel.setOpaque(false); // Rendre le pnl_main transparent
-
-        // Ajout du pnl_main avec le bouton "More options" au contentPane du JFrame
-        this.add(topPanel, BorderLayout.NORTH);
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -81,7 +88,30 @@ public class ViewStart extends JFrame {
 
         // Ajout du pnl_main à la fenêtre
         this.add(pnl_main, BorderLayout.CENTER);
+    }
 
+    public void configuration_more_options_panel()
+    {
+
+    }
+
+    public void configuration_top_panel()
+    {
+        // Création du bouton "More options"
+        buttonMoreOptions.setPreferredSize(new Dimension(120, 30));
+
+        // Création du topPanel pour le bouton "More options" et positionnement en haut à droite
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(Color.BLUE);
+        topPanel.add(buttonMoreOptions, BorderLayout.EAST);
+        topPanel.setOpaque(false); // Rendre le pnl_main transparent
+
+        // Ajout du pnl_main avec le bouton "More options" au contentPane du JFrame
+        this.add(topPanel, BorderLayout.NORTH);
+    }
+
+    private void configuration_bottom_panel()
+    {
         // Création et positionnement du bouton "Start" en bas à droite
         JButton buttonStart = new JButton("Start");
         buttonStart.setPreferredSize(new Dimension(100, 40));
@@ -90,8 +120,5 @@ public class ViewStart extends JFrame {
 
         // Ajout du pnl_main inférieur au contentPane de la fenêtre
         this.add(bottomPanel, BorderLayout.PAGE_END);
-
-        // Affichage de la fenêtre
-        setVisible(true);
     }
 }
