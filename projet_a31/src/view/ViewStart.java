@@ -2,9 +2,13 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ViewStart extends JFrame {
 
+    private CardLayout cardLayout = new CardLayout();
+    private JPanel pnl_card = new JPanel(cardLayout);   // Conteneur pour les cartes
     JPanel pnl_main = new JPanel(new GridBagLayout());     // Déclaré en dehors du constructeur pour pouvoir sauvegarder les informations et revenir dessus plus tard si l'utilisateur change de fenêtre
     JPanel pnl_moreOptions = new JPanel(new GridBagLayout());
     JButton buttonMoreOptions = new JButton("More options");
@@ -15,21 +19,28 @@ public class ViewStart extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Pour centrer la fenêtre sur l'écran
 
-        // Configuration du topPanel
+        configuration_card_panel();
+
         configuration_top_panel();
 
-        // Configuration du pnl_main
         configuration_main_panel();
 
-        // Configuration du bottomPanel
         configuration_bottom_panel();
 
-        // Configuration du pnl_moreOptions
         configuration_more_options_panel();
 
 
         // Affichage de la fenêtre
         setVisible(true);
+    }
+
+    public void configuration_card_panel() {
+        // Ajout des cartes au conteneur
+        pnl_card.add(pnl_main, "main");
+        pnl_card.add(pnl_moreOptions, "moreOptions");
+
+        // Ajout du conteneur au contentPane de la fenêtre
+        this.add(pnl_card, BorderLayout.CENTER);
     }
 
     public void configuration_main_panel()
@@ -85,26 +96,98 @@ public class ViewStart extends JFrame {
         c.gridy = 1;
         c.insets = new Insets(-20, 0, 0, 0); // Marge pour le champ de texte
         pnl_main.add(textField, c);
-
-        // Ajout du pnl_main à la fenêtre
-        this.add(pnl_main, BorderLayout.CENTER);
     }
 
     public void configuration_more_options_panel()
     {
+        pnl_moreOptions.setBackground(Color.YELLOW);
+        pnl_moreOptions.setOpaque(true);
 
+        JLabel lblGameOptions = new JLabel("Game options");
+        lblGameOptions.setFont(new Font("Arial", Font.BOLD, 20));
+        lblGameOptions.setHorizontalAlignment(JLabel.CENTER);
+        lblGameOptions.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lblGameOptions.setPreferredSize(new Dimension(300, 50));
+
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;    // Pour donner + de largeur au label afin qu'il puisse être centré par rapport à la fenêtre
+        c.anchor = GridBagConstraints.NORTH;
+        c.weighty = 1; // Donner un poids à au moins 1 composant pour occuper l'espace vertical pour que le label se place réellement en haut (avant quand je mettais top à 0, le label était centré verticalement)
+        c.insets = new Insets(50, 0, 0, 0); // Marge extérieur
+        pnl_moreOptions.add(lblGameOptions, c);
+
+
+        // --------------------- Mode de jeu -------------------------------
+        JLabel lblGameMode = new JLabel("Game mode :");
+        lblGameMode.setFont(new Font("Arial", Font.BOLD, 15));
+        lblGameMode.setHorizontalAlignment(JLabel.CENTER);
+        lblGameMode.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lblGameMode.setPreferredSize(new Dimension(150, 25));
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.weightx = 1; // Pour que l'élément et les suivants utilisent tout l'espace disponible et se place donc par défaut à gauche
+        c.anchor = GridBagConstraints.LINE_START; // Aligner à gauche
+        //c.weightx = 1; // Donner un poids à au moins 1 composant pour occuper l'espace horizontal pour que le label se place réellement en haut
+        c.insets = new Insets(-700, 0, 0, 0); // Marge extérieur
+        pnl_moreOptions.add(lblGameMode, c);
+
+
+        // Placement de la combobox pour le mode de jeu
+        String[] gameMode = {"Easy", "Classic", "Numerical"};
+        JComboBox comboBoxGameMode = new JComboBox(gameMode);
+        comboBoxGameMode.setPreferredSize(new Dimension(150, 25));
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.insets = new Insets(-700, -175, 0, 0); // Marge extérieur
+        pnl_moreOptions.add(comboBoxGameMode, c);
+
+        // ----------------------------------------------------------------
+
+
+        // --------------------- Nombre de manches ------------------------
+
+        // Label
+        JLabel lblNbRounds = new JLabel("Number of rounds :");
+        lblNbRounds.setFont(new Font("Arial", Font.BOLD, 15));
+        lblNbRounds.setHorizontalAlignment(JLabel.CENTER);
+        lblNbRounds.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lblNbRounds.setPreferredSize(new Dimension(150, 25));
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.anchor = GridBagConstraints.LINE_START;
+        c.insets = new Insets(0,0,0,0);
+        //pnl_moreOptions.add(lblNbRounds, c);
+
+        // ----------------------------------------------------------------
     }
 
     public void configuration_top_panel()
     {
-        // Création du bouton "More options"
+        // Configuration du bouton "More options"
         buttonMoreOptions.setPreferredSize(new Dimension(120, 30));
+        // Ajout d'un évènement sur le bouton pour changer de carte
+        buttonMoreOptions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Passage à la carte suivante (pas besoin de vérifier sur quelle carte je suis car je n'en possède que 2 donc la suivante sera forcément la bonne)
+                cardLayout.next(pnl_card);
+            }
+        });
 
         // Création du topPanel pour le bouton "More options" et positionnement en haut à droite
         JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(Color.BLUE);
+        //topPanel.setBackground(Color.BLUE);
         topPanel.add(buttonMoreOptions, BorderLayout.EAST);
-        topPanel.setOpaque(false); // Rendre le pnl_main transparent
+        topPanel.setOpaque(true);
+
 
         // Ajout du pnl_main avec le bouton "More options" au contentPane du JFrame
         this.add(topPanel, BorderLayout.NORTH);
