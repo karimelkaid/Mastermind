@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class ViewStart extends JFrame {
 
@@ -79,8 +80,15 @@ public class ViewStart extends JFrame {
         textField.setText("Player name");
         // Ajout d'un évènement sur le champ de texte focusAdapter pour que le texte par défaut est "Player name" et qu'il disparaisse quand on clique dessus
         textField.addFocusListener(new FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
+            public void focusGained(FocusEvent evt) {
                 textField.setText("");
+            }
+
+            public void focusLost(FocusEvent evt) {
+                if(textField.getText().equals(""))
+                {
+                    textField.setText("Player name");
+                }
             }
         });
 
