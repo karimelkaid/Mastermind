@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 
 public class ViewStart extends JFrame {
 
@@ -70,6 +71,20 @@ public class ViewStart extends JFrame {
         JLabel labelPlayerName = new JLabel("Player name");
         JTextField textField = new JTextField(10);
         textField.setPreferredSize(new Dimension(150, 24));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        textField.setFont(new Font("Arial", Font.BOLD, 15));
+        textField.setForeground(Color.BLACK);
+        textField.setBackground(Color.WHITE);
+        textField.setText("Player name");
+        // Ajout d'un évènement sur le champ de texte focusAdapter pour que le texte par défaut est "Player name" et qu'il disparaisse quand on clique dessus
+        textField.addFocusListener(new FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textField.setText("");
+            }
+        });
+
+
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -133,7 +148,7 @@ public class ViewStart extends JFrame {
         c.weightx = 1; // Pour que l'élément et les suivants utilisent tout l'espace disponible et se place donc par défaut à gauche
         c.anchor = GridBagConstraints.LINE_START; // Aligner à gauche
         //c.weightx = 1; // Donner un poids à au moins 1 composant pour occuper l'espace horizontal pour que le label se place réellement en haut
-        c.insets = new Insets(-700, 0, 0, 0); // Marge extérieur
+        c.insets = new Insets(-200, 0, 0, 0); // Marge extérieur
         pnl_moreOptions.add(lblGameMode, c);
 
 
@@ -144,7 +159,7 @@ public class ViewStart extends JFrame {
 
         c.gridx = 1;
         c.gridy = 1;
-        c.insets = new Insets(-700, -175, 0, 0); // Marge extérieur
+        c.insets = new Insets(-200, -175, 0, 0); // Marge extérieur
         pnl_moreOptions.add(comboBoxGameMode, c);
 
         // ----------------------------------------------------------------
@@ -163,10 +178,113 @@ public class ViewStart extends JFrame {
         c.gridy = 2;
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.LINE_START;
-        c.insets = new Insets(0,0,0,0);
-        //pnl_moreOptions.add(lblNbRounds, c);
+        c.insets = new Insets(-300,0,0,0);
+        pnl_moreOptions.add(lblNbRounds, c);
+
+        // JSpinner allant de 6 à 12
+        JSpinner spinnerNbRounds = new JSpinner(new SpinnerNumberModel(6, 6, 12, 1));
+        spinnerNbRounds.setPreferredSize(new Dimension(150, 25));
+
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.insets = new Insets(-300, -175, 0, 0);
+        pnl_moreOptions.add(spinnerNbRounds, c);
 
         // ----------------------------------------------------------------
+
+
+        // --------------------- Nombre de pions ------------------------
+
+        // Label
+        JLabel lbl_numberOfPawns = new JLabel("Number of pawns :");
+        lbl_numberOfPawns.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lbl_numberOfPawns.setFont(new Font("Arial", Font.BOLD, 15));
+        lbl_numberOfPawns.setHorizontalAlignment(JLabel.CENTER);
+        lbl_numberOfPawns.setPreferredSize(new Dimension(150, 25));
+
+        c.gridx = 0;
+        c.gridy = 3;
+        c.gridwidth = 1;
+        c.insets = new Insets(-400,0,0,0);
+        pnl_moreOptions.add(lbl_numberOfPawns, c);
+
+        // JSlider (personnalisé) 8 par défaut, min 4, max 8
+        JSlider sliderNbPawns = new JSlider(4, 8, 8);
+        sliderNbPawns.setMajorTickSpacing(1);   // Pour afficher les valeurs 4, 5, 6, 7, 8
+        sliderNbPawns.setPaintLabels(true); // Pour afficher les valeurs 4, 5, 6, 7, 8
+//        sliderNbPawns.setPreferredSize(new Dimension(150, 50));
+
+        c.gridx = 1;
+        c.gridy = 3;
+        c.gridwidth = 1;
+        c.insets = new Insets(-400, -175, 0, 0);
+        pnl_moreOptions.add(sliderNbPawns, c);
+
+
+        // ----------------------------------------------------------------
+
+
+        // --------------------- Nombre de pions dans une combinaison ------------------------
+
+        // Label
+        JLabel lbl_numberOfPawnsInCombination = new JLabel("Number of pawns in a combination :");
+        lbl_numberOfPawnsInCombination.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lbl_numberOfPawnsInCombination.setFont(new Font("Arial", Font.BOLD, 15));
+        lbl_numberOfPawnsInCombination.setHorizontalAlignment(JLabel.CENTER);
+        //lbl_numberOfPawnsInCombination.setPreferredSize(new Dimension(150, 25));
+
+        c.gridx = 0;
+        c.gridy = 4;
+        c.gridwidth = 1;
+        c.insets = new Insets(-500,0,0,0);
+        pnl_moreOptions.add(lbl_numberOfPawnsInCombination, c);
+
+        // JSlider (personnalisé) 4 par défaut, min , max 6
+        JSlider sliderNbPawnsInCombination = new JSlider(4, 6, 4);
+        sliderNbPawnsInCombination.setMajorTickSpacing(1);   // Pour afficher les valeurs 4, 5, 6
+        sliderNbPawnsInCombination.setPaintLabels(true); // Pour afficher les valeurs 4, 5, 6
+//        sliderNbPawnsInCombination.setPreferredSize(new Dimension(150, 50));
+
+        c.gridx = 1;
+        c.gridy = 4;
+        c.gridwidth = 1;
+        c.insets = new Insets(-500, -100, 0, 0);
+        pnl_moreOptions.add(sliderNbPawnsInCombination, c);
+
+        // -----------------------------------------------------------------------------------
+
+
+
+        // --------------------- Nombre tentatives ------------------------
+
+        // Label
+        JLabel lbl_numberOfAttempts = new JLabel("Number of attempts :");
+        lbl_numberOfAttempts.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lbl_numberOfAttempts.setFont(new Font("Arial", Font.BOLD, 15));
+        lbl_numberOfAttempts.setHorizontalAlignment(JLabel.CENTER);
+        //lbl_numberOfAttempts.setPreferredSize(new Dimension(150, 25));
+
+        c.gridx = 0;
+        c.gridy = 5;
+        c.gridwidth = 1;
+        c.insets = new Insets(-600,0,0,0);
+        pnl_moreOptions.add(lbl_numberOfAttempts, c);
+
+        // JSlider (personnalisé) 10 par défaut, min 2, max 12
+        JSlider sliderNbAttempts = new JSlider(2, 12, 10);
+        sliderNbAttempts.setMajorTickSpacing(1);   // Pour afficher les valeurs 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+        sliderNbAttempts.setPaintLabels(true); // Pour afficher les valeurs 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+        //sliderNbAttempts.setPreferredSize(new Dimension(150, 50));
+
+        c.gridx = 1;
+        c.gridy = 5;
+        c.gridwidth = 1;
+        c.insets = new Insets(-600, -175, 0, 0);
+        pnl_moreOptions.add(sliderNbAttempts, c);
+
+        // -----------------------------------------------------------------------------------
+
     }
 
     public void configuration_top_panel()
