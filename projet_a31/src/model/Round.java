@@ -58,20 +58,4 @@ public class Round {
         attempt=combi;
     }
 
-   /* public void startRound(){
-        for(int i = 1; i<tryNumber;i--){
-            System.out.println("Try number : "+i);
-            PawnColor[] tabCombination = new PawnColor[combinaisonNumber];
-            for(int j = 0 ; j<tabCombination.length;i++){
-                Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-                System.out.println("Enter value");
-
-                int choice = Integer.parseInt(myObj.nextLine());  // Read user input
-                System.out.println("choice is: " + randomTab.get(choice));  // Output user input
-                tabCombination[i]=randomTab.get(choice);
-            }
-            Combination attempt = new Combination()
-        }*/
-    }
-
 }
