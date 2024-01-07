@@ -471,14 +471,16 @@ public class ViewStart extends JFrame {
     private void configuration_bottom_panel()
     {
         // Création et positionnement du bouton "Start" en bas à droite
-        JButton btnStart = new JButton("Start");
-        btnStart.setBackground(new Color(0, 122, 204));
+        ImageIcon imageIcon = new ImageIcon("src/view/images/imgPlay2.png");
+        JButton btnStart = new JButton(imageIcon);
+        //btnStart.setBackground(new Color(0, 122, 204));
+        btnStart.setBackground(new Color(0, 51, 102));
         btnStart.setForeground(Color.WHITE);
         btnStart.setFont(new Font("Arial", Font.BOLD, 15));
-        btnStart.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btnStart.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 102)));
         btnStart.setFocusPainted(false); // Pour enlever le contour bleu autour du texte du bouton quand on clique dessus
-        btnStart.setOpaque(true); // Pour que la couleur de fond soit appliquée
-        btnStart.setPreferredSize(new Dimension(100, 40));
+        //btnStart.setOpaque(true); // Pour que la couleur de fond soit appliquée
+        //btnStart.setPreferredSize(new Dimension(100, 40));
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground( new Color(0, 51, 102) );
         bottomPanel.add(btnStart, BorderLayout.EAST);
@@ -490,7 +492,7 @@ public class ViewStart extends JFrame {
             }
 
             public void mouseExited(MouseEvent evt) {
-                btnStart.setBackground(new Color( 0,122,204 )); // Couleur par défaut
+                btnStart.setBackground(new Color(0, 51, 102)); // Couleur par défaut
             }
 
             public void mousePressed(MouseEvent evt) {
