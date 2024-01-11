@@ -1,10 +1,12 @@
-package view;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MastermindGameDisplay extends JFrame {
     public MastermindGameDisplay() {
@@ -18,10 +20,29 @@ public class MastermindGameDisplay extends JFrame {
             JPanel rowPanel = new JPanel();
             rowPanel.setLayout(new GridLayout(1,CombinationNumber,0,0));
             for(int j=0;j<CombinationNumber;j++){
-                JLabel label = new CircleLabel();
-                label.setPreferredSize(new Dimension(50, 50));
-                label.setOpaque(true);
-                rowPanel.add(label);
+                JLabel Circlelabel = new CircleLabel();
+                Circlelabel.setPreferredSize(new Dimension(50, 50));
+                Circlelabel.setOpaque(true);
+                Circlelabel.setBackground(new Color(0, 51, 102));
+                Circlelabel.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (Circlelabel.getBackground().equals(Color.RED)){
+                            Circlelabel.setBackground(Color.BLUE);
+                        }
+                        else if (Circlelabel.getBackground().equals(Color.BLUE)){
+                            Circlelabel.setBackground(Color.GREEN);
+                        }
+                        else if (Circlelabel.getBackground().equals(Color.GREEN)){
+                            Circlelabel.setBackground(Color.YELLOW);
+                        }
+                        else{
+                            Circlelabel.setBackground(Color.RED);
+                        }
+                        Circlelabel.repaint();
+                    }
+                });
+                rowPanel.add(Circlelabel);
             }
             if(i!=0) {
                 panel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -32,12 +53,37 @@ public class MastermindGameDisplay extends JFrame {
             panel.add(Box.createRigidArea(new Dimension(0,10)));
             panel.add(rowPanel);
         }
+        //Creation des indices
+        JPanel indicepanel= new JPanel(new FlowLayout());
+        JLabel indicenoir=new JLabel("Indice Noir : 0");
+        JLabel indiceblanc=new JLabel("Indice Blanc : 0");
+        //Ajout au panel
+        indicepanel.add(indicenoir);
+        indicepanel.add(indiceblanc);
+        //Seperateurs et ajout panel principal
         panel.add(Box.createRigidArea(new Dimension(0,10)));
+        panel.add(indicepanel);
+        panel.add(Box.createRigidArea(new Dimension(0,10)));
+        /*ImageIcon logoIcon = new ImageIcon("src/view/images/game_logo2_sf.png");
+        JLabel lblLogo = new JLabel(logoIcon);
+        lblLogo.setPreferredSize(new Dimension(500, 350));
+        panel.add(lblLogo);*/
+        panel.setBackground(new Color(0, 51, 102));
         setContentPane(panel);
         setVisible(true);
         pack();
 
     }
+    /*public static String getColorName(Color color) {
+        Map<Color, String> colorNames = new HashMap<>();
+        for(PawnColor value:PawnColor.values()){
+            colorNames.put((Color) Color.class.getField(value.toString()).get(null));
+        }
+        colorNames.put(Color.RED, "red");
+        colorNames.put(Color.GREEN, "green");
+        colorNames.put(Color.BLUE, "blue");
+        return colorNames.get(color);
+    }*/
         /*super("Mastermind");
         JPanel panel = new JPanel(new GridLayout(0, 9, 0, 50));
         for (int i = 0; i < 27; i++) {
@@ -67,7 +113,13 @@ public class MastermindGameDisplay extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }*/
-    private static class CircleLabel extends JLabel {
+    public static class CircleLabel extends JLabel {
+            private Color color = Color.WHITE;
+
+            public void setColor(Color color) {
+            this.color = color;
+            repaint();
+            }
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
