@@ -1,15 +1,20 @@
-import java.awt.*;
+import view.view_end;
 
+import java.awt.*;
 public class Main {
     public static void main(String[] args)
     {
+
+
+        view_end view_end= new view_end(100, true);
+    }
         /*// Choisir une combinaison secrète
         MastermindGame mastermindGame = new MastermindGame();
         mastermindGame.init();  // La combinaison secrète sera directement appelé dans init
 
         // Lancement partie
         mastermindGame.startGame();*/
-
+        /*
         MastermindGame mastermindGame = new MastermindGame();
 
         while(recommencer)
@@ -43,4 +48,6 @@ public class Main {
         mastermindGame.showFinalResult();
 
     }
+
+         */
 }

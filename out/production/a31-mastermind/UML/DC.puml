@@ -1,0 +1,119 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+
+class Main{
+    + {static} main(args : String[])
+}
+
+' ICI METTRE QUE LE MAIN INSTANCIE LES CLASSES ETC...
+
+
+package view{
+    class View_start_game{
+
+        + <<Create>>View_start_game()
+
+        + setPlayerName(name: String)
+        + setGameMode(mode: displayMode)
+        + setNumberOfRounds(rounds: Integer)
+        + setPawnNumber(pawns: Integer): void
+        + setCombinaisonNumber(combinaisons: Integer)
+        + setTryNumber(tries: Integer)
+    }
+
+    class View_game implements Observer{
+        - _roundScore
+
+        + <<Create>>View_game()
+    }
+
+    class View_end_game{
+        - _totalScore
+
+        + <<Create>>View_end_game()
+    }
+
+    interface Observer{
+
+    }
+}
+
+package model{
+    class MastermindGame {
+      + startGame(): void
+      + makeMove(combination: Combination)
+      + isGameOver(): boolean
+      + getScore(): int
+    }
+
+    class MastermindSetting{
+        - _playerName : String
+        - _gameMode : displayMode
+        - _numberOfRounds : Integer
+        - _pawnNumber : Integer
+        - _combinaisonNumber : Integer
+        - _tryNumber : Integer
+
+        + <<Create>> MastermindSetting()
+    }
+
+    class Round {
+      + calculateScore(): int
+    }
+
+    class Combination{
+    }
+
+
+    class Clue{
+    }
+
+
+    enum PawnColor{
+        RED
+        ORANGE
+        BLUE
+        GREEN
+    }
+
+
+}
+
+package controller{
+    class MastermindController{
+
+    }
+
+}
+
+View_game --"1\n-mastermindController" MastermindController : send user request >
+
+
+MastermindController --"1\n-mastermindGame" MastermindGame : edit >
+
+MastermindGame --"1\n-settings" MastermindSetting : has >
+
+
+Observer --- MastermindGame : observes >
+
+
+
+MastermindGame --"*\n-rounds" Round : has >
+MastermindGame --"1\n-secretCombination" Combination : has >
+
+
+
+
+
+Combination ---"*\n-clues" Clue : has >
+
+Combination ---"*\npawns" PawnColor : contains >
+
+Round --> "*\n-attempts" Combination
+
+@enduml
