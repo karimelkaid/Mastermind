@@ -3,14 +3,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UserView extends JFrame {
+public class end_view extends JFrame {
     private JLabel scoreLabel;
     private JLabel resultLabel;
     private JButton replayButton;
     private JButton exitButton;
     private JPanel mainPanel; // Panneau principal
 
-    public UserView(int score, boolean hasWon) {
+    public end_view(int score, boolean hasWon) {
         // Configuration de la fenêtre
         setTitle("Fin de Partie");
         setSize(400, 600);
@@ -90,6 +90,6 @@ public class UserView extends JFrame {
 
 
     public static void main(String[] args) {
-        new UserView(100, false); // Exemple d'utilisation
+        new end_view(100, false); // Exemple d'utilisation
     }
 }
