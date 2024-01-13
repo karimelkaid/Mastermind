@@ -3,25 +3,31 @@ package model;
 import view.MastermindGameDisplay;
 import view.RoundObserver;
 
+import javax.swing.*;
 import java.util.*;
 
+import static java.lang.constant.ConstantDescs.NULL;
+
 public class Round {
+    private final String gameMode;
     private int _score;
     private boolean endBool=false;
     private int pawnNumber;
     private int combinaisonNumber;
     private int tryNumber;
-    private int attemptNumber;
+    private int attemptNumber;  // Numéro de la tentative en cours
     private List<Combination> attempts;
 
     private PawnColor[] secretCombination;
     private List<PawnColor> randomTab= new ArrayList<PawnColor>();
     private List<RoundObserver> roundObservers;
 
-    public Round(int pawnNumber, int combinaisonNumber, int tryNumber){
+    public Round(int pawnNumber, int combinaisonNumber, int tryNumber, String gameMode, RoundObserver mastermindGameDisplay)
+    {
         this.pawnNumber=pawnNumber;
         this.tryNumber=tryNumber;
         this.combinaisonNumber=combinaisonNumber;
+        this.gameMode = gameMode;
         for(PawnColor color : PawnColor.values())
         {
             randomTab.add(color);
@@ -34,6 +40,36 @@ public class Round {
         this.secretCombination= new PawnColor[]{PawnColor.BLUE, PawnColor.GREEN, PawnColor.RED, PawnColor.ORANGE};
 
         this.roundObservers= new ArrayList<>();
+
+        // ------------------------------------------------
+        // Ajout des combinaisons
+        for(int i=0; i<tryNumber; i++)
+        {
+            GenerateCluesStrategy generateCluesStrategy = null;
+            if( gameMode.equals("Easy") )
+            {
+                generateCluesStrategy = new GenerateCluesEasy();
+            }
+            else if( gameMode.equals("Numerical") )
+            {
+                generateCluesStrategy = new GenerateCluesNumerical();
+            }
+            else
+            {
+                // Ajouté + tard le mode classic
+                System.out.println("Erreur : mode de jeu inconnu");
+            }
+            Combination combination = new Combination(generateCluesStrategy, this.secretCombination, i);
+            combination.addRoundObserver( mastermindGameDisplay );
+            inputCombination(combination);
+        }
+        // ------------------------------------------------
+
+    }
+
+    // Retourne la tentative en cours
+    public Combination getCurrentAttempt() {
+        return attempts.get(attemptNumber-1);
     }
     /*public Combination generateCombination(){
 
@@ -97,7 +133,7 @@ public class Round {
 
     // Return le score du round
     public int play() {
-        RoundObserver roundObserver1 = new MastermindGameDisplay();
+        /*RoundObserver roundObserver1 = new MastermindGameDisplay();
         this.roundObservers.add(roundObserver1);
 
         //Creer combinaison (la bonne)
@@ -119,7 +155,7 @@ public class Round {
         // Affichage des indices
         combination.showClues();
 
-        nextTentative();
+        nextTentative();*/
 
 
 
@@ -129,6 +165,10 @@ public class Round {
     public Combination getCombination(int numCombination) {
         Combination res = this.attempts.get(numCombination);
         return res;
+    }
+
+    public List<Combination> getAttempts() {
+        return new ArrayList<>(attempts);
     }
 
    /* public void startRound(){

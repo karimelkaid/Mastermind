@@ -2,6 +2,7 @@ package model;
 
 import view.RoundObserver;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +34,11 @@ public class Combination {
         this.numCombination = numCombination;
     }
 
-    public void notifyAddPawn(PawnColor pawnColorAdd)
+    public void notifyAddPawn(int boxPosition , PawnColor pawnColorAdd)
     {
         for(RoundObserver roundObserver : roundObservers)
         {
-            roundObserver.updateCombination(this.numCombination, pawnColorAdd);
+            roundObserver.updateCombination(this.numCombination, boxPosition, pawnColorAdd);
         }
     }
 
@@ -60,7 +61,7 @@ public class Combination {
         }
 
         // Notification des RoundObservers pour modifier la vue en conséquence
-        notifyAddPawn(pawnColor);
+        //notifyAddPawn(pawnColor);
     }
 
     // Générer les indices
@@ -130,5 +131,59 @@ public class Combination {
 
         this.generateCluesStrategy = generateCluesStrategy;
 
+    }
+
+    public void setPawn(int positionCase, Color newPawnColor) {
+        // Conversion de la couleur en PawnColor
+        PawnColor pawnColor = PawnColor.RED;
+        if( newPawnColor.equals(Color.RED) )
+        {
+            pawnColor = PawnColor.RED;
+        }
+        else if( newPawnColor.equals(Color.BLUE) )
+        {
+            pawnColor = PawnColor.BLUE;
+        }
+        else if( newPawnColor.equals(Color.GREEN) )
+        {
+            pawnColor = PawnColor.GREEN;
+        }
+        else if( newPawnColor.equals(Color.YELLOW) )
+        {
+            pawnColor = PawnColor.YELLOW;
+        }
+
+        // Modification de la couleur du pion dans le modèle
+        pawns[positionCase] = pawnColor;
+
+        // Notification des RoundObservers pour modifier la vue en conséquence
+        notifyAddPawn(positionCase, pawnColor);
+
+        // Si la combinaison est complète, nous notifions les RoundObservers pour qu'ils puissent modifier la vue en conséquence
+        if( this.isComplete() )
+        {
+            // Notification des RoundObservers
+            notifyCombinationFinish();
+        }
+    }
+
+    public void notifyCombinationFinish() {
+        for( RoundObserver roundObserver : roundObservers )
+        {
+            roundObserver.updateCombinationFinish(this.numCombination);
+        }
+    }
+
+    public boolean isComplete() {
+        boolean res = true;
+        for(int i=0; i<4; i++)
+        {
+            if( pawns[i] == null )
+            {
+                res = false;
+            }
+        }
+
+        return res;
     }
 }

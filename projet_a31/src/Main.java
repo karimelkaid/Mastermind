@@ -1,5 +1,6 @@
 
 import model.*;
+import view.MastermindGameDisplay;
 import view.ViewStart;
 import view.View_start;
 
@@ -8,7 +9,9 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args)
     {
-        ViewStart viewStart = new ViewStart();
+        //ViewStart viewStart = new ViewStart();
+        MastermindGame mastermindGame = new MastermindGame("Jawad","Easy", 3,4,4,3);
+
 
         /*
         Round round = new Round(4,4,4);
@@ -22,8 +25,8 @@ public class Main {
 
 
         /*MastermindGame mastermindGame = new MastermindGame("jawad", 10,4,4, 10);
-        mastermindGame.start();
-        System.out.println(mastermindGame.getScore());
+        mastermindGame.start();*/
+        /*System.out.println(mastermindGame.getScore());
 
         GenerateCluesStrategy generateCluesStrategy = new GenerateCluesEasy();
         PawnColor[] secretCombination = {PawnColor.ORANGE,PawnColor.BLUE, PawnColor.RED, PawnColor.GREEN};

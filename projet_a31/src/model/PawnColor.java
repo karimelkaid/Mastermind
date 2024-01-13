@@ -1,8 +1,17 @@
 package model;
 
+import java.awt.*;
+
 public enum PawnColor {
     RED,
     ORANGE,
     GREEN,
-    BLUE
+    BLUE,
+    YELLOW,
+    PURPLE,
+    PINK,
+    BROWN,
+    WHITE,
+    BLACK;
+
 }

@@ -4,6 +4,8 @@ import model.Combination;
 import model.PawnColor;
 import model.Round;
 
+import java.awt.*;
+
 public class RoundController {
     private Round round;
 
@@ -18,12 +20,27 @@ public class RoundController {
         // Appel de la méthode pour générer la combinaison secrète pour un Round
     }
 
-    public void addPawn(int numCombination, PawnColor pawnColor)
+    public void addPawn(Combination currentAttempt, int positionCase, Color currentPawnColor)
     {
-        // Récupération de la combinaison à modifier
-        Combination combination = round.getCombination(numCombination);
-        combination.addPawn(pawnColor);
+        Color newPawnColor = currentPawnColor;
+        if (currentPawnColor.equals(Color.RED)){
+            newPawnColor = Color.BLUE;
+        }
+        else if (currentPawnColor.equals(Color.BLUE)){
+            newPawnColor = Color.GREEN;
+        }
+        else if (currentPawnColor.equals(Color.GREEN)){
+            newPawnColor = Color.YELLOW;
+        }
+        else{
+            newPawnColor = Color.RED;
+        }
+
+        // Modification de la couleur du pion dans le modèle
+        currentAttempt.setPawn(positionCase, newPawnColor);
+
     }
+
 
     public void generateClues(int numCombination)
     {

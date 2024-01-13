@@ -1,5 +1,8 @@
 package view;
 
+import controller.RoundController;
+import model.MastermindGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -106,7 +109,14 @@ public class ViewStart extends JFrame {
         // Nous lançons la partie uniquement si le nom du joueur n'est pas vide
         if( !playerName.equals("") && !playerName.equals("Player name"))
         {
-            // Code pour lancer la partie
+            // Code pour lancer la partie en passant les options de jeu en paramètre
+
+            // Création du modèle MastermindGame
+            MastermindGame mastermindGame = new MastermindGame( playerName, gameMode, nbRounds, nbPawns, nbPawnsInCombination, nbAttempts );
+
+            // Création de la vue MastermindGameDisplay en lui donnant le modèle MastermindGame
+            MastermindGameDisplay mastermindGameDisplay = new MastermindGameDisplay(mastermindGame);
+
         }
     }
 
