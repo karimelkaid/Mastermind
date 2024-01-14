@@ -20,10 +20,10 @@ public class Round {
     private List<Combination> attempts;
 
     private PawnColor[] secretCombination;
-    private List<PawnColor> pawnsColors= new ArrayList<PawnColor>();
+    private PawnColor[] pawnsColors;
     private List<RoundObserver> roundObservers;
 
-    public Round(int pawnNumber, int combinaisonNumber, int tryNumber, String gameMode, RoundObserver mastermindGameDisplay, int roundNumber, List<PawnColor> pawnsColors)
+    public Round(int pawnNumber, int combinaisonNumber, int tryNumber, String gameMode, RoundObserver mastermindGameDisplay, int roundNumber, PawnColor[] pawnsColors)
     {
         this.pawnNumber=pawnNumber;
         this.tryNumber=tryNumber;
@@ -70,16 +70,13 @@ public class Round {
 
     }
 
-    public List<PawnColor> getPawnsColors() {
-        return new ArrayList<>(pawnsColors);
-    }
 
     private void generateCombination()
     {
         this.secretCombination = new PawnColor[combinaisonNumber];
         List<PawnColor> coloursAlreadyChosen = new ArrayList<>();   // Liste des couleurs déjà choisies pour ne pas les rechoisir (on veut des couleurs toutes différentes)
         for(int i = 0 ; i<secretCombination.length;i++){
-            this.secretCombination[i]= pawnsColors.get((int)(Math.random()*(PawnColor.values().length-0))+0);
+            this.secretCombination[i]= pawnsColors[(int)(Math.random()*(pawnsColors.length-0))+0];
             // Si on tire le blanc ou la couleur tirée est déjà choisie, on recommence
             if( this.secretCombination[i] == PawnColor.WHITE || coloursAlreadyChosen.contains(this.secretCombination[i]) )
             {

@@ -162,7 +162,7 @@ public class Combination {
         {
             System.out.println("Indices (mode pas numérique) : ");
 
-            for(int i=0; i<4; i++)
+            for(int i=0; i<combinationNumber; i++)
             {
                 System.out.print("\t- "+clues[i]);
             }

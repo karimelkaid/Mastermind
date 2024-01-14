@@ -107,7 +107,7 @@ public class ViewStart extends JFrame {
         JOptionPane.showMessageDialog(this, "nb attempts = "+this.nbAttempts);
 
         // Nous lançons la partie uniquement si le nom du joueur n'est pas vide
-        if( !playerName.equals("") && !playerName.equals("Player name"))
+        if( playerName != null && !playerName.equals("") && !playerName.equals("Player name"))
         {
             // Code pour lancer la partie en passant les options de jeu en paramètre
 

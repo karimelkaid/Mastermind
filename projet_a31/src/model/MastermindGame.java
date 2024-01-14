@@ -32,7 +32,7 @@ public class MastermindGame {
 
     private boolean isGameFinished;
 
-    private List<PawnColor> pawnsColors= new ArrayList<PawnColor>();    // Liste des couleurs des pions disponibles
+    private PawnColor[] pawnsColors;    // Liste des couleurs des pions disponibles
 
     private MastermindGameDisplay mastermindGameDisplay;    // Observer associé aux rounds
 
@@ -47,9 +47,10 @@ public class MastermindGame {
         this.isGameFinished = false;
 
         // On prend les pawnNumber+1 premières couleurs car le 1er est la couche blanche et ce n'est pas une couleur pour un pion mais une case vide
+        pawnsColors = new PawnColor[_pawnNumber+1];
         for(int i=0; i<_pawnNumber+1; i++)
         {
-            pawnsColors.add( PawnColor.values()[i] );
+            pawnsColors[i] = PawnColor.values()[i] ;
         }
 
 
@@ -245,7 +246,15 @@ public class MastermindGame {
         return res;
     }
 
-    public List<PawnColor> getPawnsColors() {
-        return new ArrayList<>(pawnsColors);
+    public PawnColor[] getPawnsColors() {
+        return pawnsColors;
+    }
+
+    public int getRoundNumber() {
+        return this._numberOfRounds;
+    }
+
+    public String getPlayerName() {
+        return _playerName;
     }
 }

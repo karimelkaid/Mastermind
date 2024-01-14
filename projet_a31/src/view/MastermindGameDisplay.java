@@ -22,6 +22,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
     JPanel pnlBottom;     // Vérifier s'il doit être créé
 
     JButton btnNextRound;   // Déclaré ici car je dois le désactiver dans la méthode updateRoundFinish() et le réactiver dans la méthode updateNextAttempt()
+    JLabel lblRound;
 
     boolean alreadyHandled = false;
 
@@ -44,10 +45,14 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         JLabel lblScore = new JLabel("Score : 0");
         pnlInformations.add(lblScore, BorderLayout.EAST);
         // Placer un autre JLabel dans le panel pnlInformations au Centre pour le nom du joueur
-        JLabel lblPlayerName = new JLabel("Player name");
+        JLabel lblPlayerName = new JLabel("Player : "+mastermindGame.getPlayerName());
         pnlInformations.add(lblPlayerName, BorderLayout.CENTER);
         // Ajouter le panel pnlInformations à la JFrame au Nord
         this.add(pnlInformations, BorderLayout.NORTH);
+
+        // Jlabel pour le numéro du round en cours sur combien
+        lblRound = new JLabel("Round 1/"+mastermindGame.getRoundNumber());
+        pnlInformations.add(lblRound, BorderLayout.WEST);
 
         configureRoundsPanel();
         configureBottomPanel();
@@ -219,8 +224,8 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
                 }
                 else
                 {
-                    JComboBox<PawnColor> comboColor = new JComboBox<>((ComboBoxModel) mastermindGame.getPawnsColors());   // On ajoute dans la cbo les couleurs de la liste des couleurs possibles
-                    comboColor.setName("comboColor" + i + j);
+                    JComboBox<PawnColor> comboColor = new JComboBox<>(mastermindGame.getPawnsColors());   // On ajoute dans la cbo les couleurs de la liste des couleurs possibles
+                    comboColor.setName("comboColor-" + i + "-" + j);
                     // Configure le rendu pour afficher les couleurs dans le JComboBox
                     comboColor.setRenderer(new DefaultListCellRenderer() {
                         @Override
@@ -257,16 +262,18 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
     public int getPositionBox(String name)
     {
         int position = 0;
-        String[] parts = name.split("comboColor");
-        String part1 = parts[0]; // comboColor
-        String part2 = parts[1]; // 00
-        position = Integer.parseInt(part2.substring(1));
+        String[] parts = name.split("-");
+        String numColumnOfCbo = parts[2];
+        position = Integer.parseInt(numColumnOfCbo);
         return position;
     }
 
     @Override
     public void updateNewRound() {
         System.out.println("New round : " + mastermindGame.getCurrentRound().getRoundNumber());
+
+        // MAJ du label
+        lblRound.setText("Round "+(mastermindGame.getCurrentRound().getRoundNumber()+1)+"/"+mastermindGame.getRoundNumber());     // +1 car commencement = 0
 
         // Ajout d'un nouveau panel pour le nouveau round
         createRoundPanel( mastermindGame.getCurrentRound().getRoundNumber() );
@@ -383,7 +390,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         {
             if( c instanceof JComboBox )
             {
-                if( c.getName().equals("comboColor"+numCombination+boxPosition) )
+                if( c.getName().equals("comboColor-"+numCombination+"-"+boxPosition) )
                 {
                     cboColor = (JComboBox<PawnColor>) c;
                 }
@@ -514,7 +521,11 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
             {
                 if( c instanceof JComboBox )
                 {
-                    if( c.getName().contains("comboColor"+combination.getNumCombination()) )   // Si le nom du bouton contient btnPawn+numCombination alors c'est un bouton de la combinaison
+                    // On extrait le numéro de la ligne de la cbo
+                    String[] parts = c.getName().split("-");
+                    int numLineOfCbo = Integer.parseInt(parts[1]);
+
+                    if( numLineOfCbo == combination.getNumCombination() )   // Si le nom du bouton contient btnPawn+numCombination alors c'est un bouton de la combinaison
                     {
                         JComboBox cboColor = (JComboBox) c;
 
@@ -526,7 +537,8 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
                         lblColor.setPreferredSize(cboColor.getPreferredSize());
                         lblColor.setOpaque(true);
                         lblColor.setBackground(getColorFromPawn(selectedColor));
-                        lblColor.setBorder(cboColor.getBorder()); // Copier la bordure
+                        // Une grosse bordure en haut du label et des petites sur les côtés gauche, droit et en bas
+                        lblColor.setBorder(BorderFactory.createMatteBorder(5, 1, 1, 1, Color.BLACK));
 
                         // Obtenir l'index du JComboBox avant de le supprimer
                         int index = pnlRound.getComponentZOrder(cboColor);
@@ -545,16 +557,21 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         }
         else
         {
-            // J'ajoute les ActionListener aux JComboBoxs de la combinaison et je réactive les JComboBoxs
-            for( Component c : pnlRound.getComponents() )
+            // Je réactive les JComboBox
+            boolean lineUnblocked = false;
+            for( int i=0; i<pnlRound.getComponents().length; i++ )
             {
+                Component c = pnlRound.getComponents()[i];
                 if( c instanceof JComboBox )
                 {
-                    if( c.getName().contains("comboColor"+combination.getNumCombination()) )   // Si le nom du bouton contient btnPawn+numCombination alors c'est un bouton de la combinaison
+                    // On extrait le numéro de la ligne de la cbo
+                    String[] parts = c.getName().split("-");
+                    int numLineOfCbo = Integer.parseInt(parts[1]);
+                    if( numLineOfCbo == combination.getNumCombination() )   // Si le nom du bouton contient btnPawn+numCombination alors c'est un bouton de la combinaison
                     {
                         JComboBox cboColor = (JComboBox) c;
                         //addActionListener(cboColor);
-                        c.setEnabled(true);
+                        cboColor.setEnabled(true);
                     }
                 }
             }
@@ -586,6 +603,19 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
             // Je bloque la combinaison
             pnlCombination.setEnabled(false);
         }*/
+    }
+
+    public boolean lastCboIsUnblocked(JComboBox cbo, Combination combination)
+    {
+        boolean res = false;
+        // La cbo en paramètre est la dernière de la ligne de la combinaison si son nom est "comboColor"+numCombination+mastermindGame.getCombinationNumber()-1
+        String nameOfLastCboInLine = "comboColor"+ combination.getNumCombination() + (mastermindGame.getCombinationNumber()-1);
+        String nameOfCbo = cbo.getName();
+        if( nameOfCbo.equals( nameOfLastCboInLine ) )
+        {
+            res = true;
+        }
+        return res;
     }
 
     @Override
