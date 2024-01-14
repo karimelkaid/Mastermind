@@ -16,7 +16,9 @@ public class Combination {
     private GenerateCluesStrategy generateCluesStrategy;
     private PawnColor[] secretCombination;  // Besoin pour générer les indices (en comparant avec la combinaison actuelle)
     private List<RoundObserver> roundObservers;
-    private int numCombination;
+    private int numCombination;    // Numéro de la combinaison pour identifier la combinaison dans la liste des combinaisons du Round
+
+    private boolean isBlocked;      // Pour savoir si la combinaison est bloquée ou non (si elle est bloquée, on ne peut pas la modifier)
 
     // numCombination pour pouvoir notifier le RoundObserver en lui passant la bonne combinaison (voir méthode updateAddPawn)
     public Combination(GenerateCluesStrategy generateCluesStrategy, PawnColor[] secretCombination, int numCombination)
@@ -32,6 +34,33 @@ public class Combination {
         this.secretCombination = secretCombination;
         this.roundObservers = new ArrayList<>();
         this.numCombination = numCombination;
+
+        // De base, nous bloquons toutes les combinaisons sauf la 1ère
+        if( this.numCombination == 0 )
+        {
+            this.isBlocked = false;
+        }
+        else
+        {
+            this.isBlocked = true;
+        }
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+        // Notification des RoundObservers pour modifier la vue en conséquence
+        notifyCombinationIsBlocked(this);
+    }
+
+    public void notifyCombinationIsBlocked(Combination combination) {
+        for( RoundObserver roundObserver : roundObservers )
+        {
+            roundObserver.updateCombinationIsBlocked(combination);
+        }
+    }
+
+    public String[] getClues() {
+        return clues;
     }
 
     public void notifyAddPawn(int boxPosition , PawnColor pawnColorAdd)
@@ -76,6 +105,23 @@ public class Combination {
             //clues_not_numerical = generateCluesStrategy.generateClues(this.tab_pawn, secretCombination);
             clues = generateCluesStrategy.generateClues(this.pawns, secretCombination);
         }
+
+        // Affichage des indices
+        showClues();
+
+        // Modèle modifié, on notifie les RoundObservers pour modifier la vue en conséquence
+        notifyCluesModified();
+    }
+
+    public void notifyCluesModified() {
+        for( RoundObserver roundObserver : roundObservers )
+        {
+            roundObserver.updateCluesModified(this);
+        }
+    }
+
+    public int getNumCombination() {
+        return numCombination;
     }
 
     public PawnColor getPawn(int i) {
@@ -152,6 +198,26 @@ public class Combination {
         {
             pawnColor = PawnColor.YELLOW;
         }
+        else if( newPawnColor.equals(Color.ORANGE) )
+        {
+            pawnColor = PawnColor.ORANGE;
+        }
+        else if( newPawnColor.equals(Color.PINK) )
+        {
+            pawnColor = PawnColor.PINK;
+        }
+        else if( newPawnColor.equals(Color.WHITE) )
+        {
+            pawnColor = PawnColor.WHITE;
+        }
+        else if( newPawnColor.equals(Color.CYAN) )
+        {
+            pawnColor = PawnColor.CYAN;
+        }
+        else if( newPawnColor.equals(Color.GRAY) )
+        {
+            pawnColor = PawnColor.GRAY;
+        }
 
         // Modification de la couleur du pion dans le modèle
         pawns[positionCase] = pawnColor;
@@ -164,13 +230,15 @@ public class Combination {
         {
             // Notification des RoundObservers
             notifyCombinationFinish();
+
+
         }
     }
 
     public void notifyCombinationFinish() {
         for( RoundObserver roundObserver : roundObservers )
         {
-            roundObserver.updateCombinationFinish(this.numCombination);
+            roundObserver.updateCombinationFinish(this);
         }
     }
 
@@ -185,5 +253,9 @@ public class Combination {
         }
 
         return res;
+    }
+
+    public boolean getIsBlocked() {
+        return isBlocked;
     }
 }

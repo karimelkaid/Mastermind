@@ -15,6 +15,7 @@ public class Round {
     private int pawnNumber;
     private int combinaisonNumber;
     private int tryNumber;
+    private int roundNumber;    // Pour nommer les panels des rounds dans la vue principale
     private int attemptNumber;  // Numéro de la tentative en cours
     private List<Combination> attempts;
 
@@ -22,7 +23,7 @@ public class Round {
     private List<PawnColor> randomTab= new ArrayList<PawnColor>();
     private List<RoundObserver> roundObservers;
 
-    public Round(int pawnNumber, int combinaisonNumber, int tryNumber, String gameMode, RoundObserver mastermindGameDisplay)
+    public Round(int pawnNumber, int combinaisonNumber, int tryNumber, String gameMode, RoundObserver mastermindGameDisplay, int roundNumber)
     {
         this.pawnNumber=pawnNumber;
         this.tryNumber=tryNumber;
@@ -33,6 +34,7 @@ public class Round {
             randomTab.add(color);
             System.out.println(color);
         }
+        this.roundNumber = roundNumber;
 
         this.attempts = new ArrayList<>();
         this.attemptNumber=1;
@@ -67,10 +69,15 @@ public class Round {
 
     }
 
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
     // Retourne la tentative en cours
     public Combination getCurrentAttempt() {
         return attempts.get(attemptNumber-1);
     }
+
     /*public Combination generateCombination(){
 
         PawnColor[] tabCombination = new PawnColor[combinaisonNumber];
@@ -84,9 +91,9 @@ public class Round {
         return secretCombination;
     }*/
     public void nextTentative() {
-        attemptNumber = 4;      // Pour tester le notifyRoundFinish (ça marche)
+        //attemptNumber = 4;      // Pour tester le notifyRoundFinish (ça marche)
         if(attemptNumber<tryNumber) {
-            System.out.println("Try number : " + attemptNumber);
+            //System.out.println("Try number : " + attemptNumber);
             if (verifyCombination(attempts.get(attemptNumber-1)))
             {
                 System.out.println("Round won!");
@@ -97,11 +104,24 @@ public class Round {
             {
                // attempts.showClues();
                 attemptNumber++;
+
+                Combination newCombination = getCurrentAttempt();     // Débloquage de la nouvelle tentative
+                newCombination.setBlocked(false);
+
+
+
+                notifyNextAttempt();
             }
         }
         else {
             System.out.println("No more tries : You lost.");
             notifyRoundFinish();
+        }
+    }
+
+    public void notifyNextAttempt() {
+        for(RoundObserver roundObserver : roundObservers) {
+            roundObserver.updateNextAttempt(attemptNumber);
         }
     }
 

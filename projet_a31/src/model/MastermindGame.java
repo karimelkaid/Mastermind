@@ -1,6 +1,8 @@
 package model;
+import controller.MastermindController;
 import controller.RoundController;
 import view.MastermindGameDisplay;
+import view.MastermindGameObserver;
 import view.RoundObserver;
 import view.ViewStart;
 
@@ -26,6 +28,12 @@ public class MastermindGame {
     private RoundController current_roundController;    // Controller associé au round en cours
     private RoundObserver current_roundObserver;    // Observer associé au round en cours
 
+    private List<MastermindGameObserver> mastermindGameObservers; // Liste des observers associés à la partie
+
+    private boolean isGameFinished;
+
+    private MastermindGameDisplay mastermindGameDisplay;    // Observer associé aux rounds
+
     public MastermindGame(String _playerName, String gameMode, int _numberOfRounds, int _pawnNumber, int _combinaisonNumber, int _tryNumber){
         this._playerName = _playerName;
         this.gameMode = gameMode;
@@ -34,15 +42,16 @@ public class MastermindGame {
         this._combinaisonNumber = _combinaisonNumber;
         this._tryNumber = _tryNumber;
         this._score = 0;
+        this.isGameFinished = false;
 
         this.rounds = new ArrayList<>();
         this.roundControllers = new ArrayList<>();
         this.roundObservers = new ArrayList<>();
 
-        RoundObserver roundObserver = new MastermindGameDisplay(this);
+        mastermindGameDisplay = new MastermindGameDisplay(this, new MastermindController(this));  // Création de la vue principale
 
         // Créations du 1er round avant d'instancier la vue
-        Round round = new Round( _pawnNumber, _combinaisonNumber, _tryNumber, gameMode, roundObserver );
+        Round round = new Round( _pawnNumber, _combinaisonNumber, _tryNumber, gameMode, mastermindGameDisplay, 0 );
         rounds.add(round);
         current_round = rounds.get( rounds.size()-1 );
 
@@ -52,9 +61,17 @@ public class MastermindGame {
         current_roundController = roundControllers.get( roundControllers.size()-1 );
 
         // Création de l'Observer associé au Round
-        roundObservers.add(roundObserver);
-        current_round.addObserver(roundObserver);
+        roundObservers.add(mastermindGameDisplay);
+        current_round.addObserver(mastermindGameDisplay);
         current_roundObserver = roundObservers.get( roundObservers.size()-1 );
+
+        this.mastermindGameObservers = new ArrayList<>();
+        addMastermindGameObserver(mastermindGameDisplay);
+    }
+
+    public void addMastermindGameObserver( MastermindGameObserver mastermindGameObserver )
+    {
+        mastermindGameObservers.add(mastermindGameObserver);
     }
 
 
@@ -129,13 +146,50 @@ public class MastermindGame {
 
     public void nextRound() {
         // Quand cette méthode est appelée, c'est qu'il y a encore au moins un round à jouer (vérifié dans updateRoundFinish)
+        // On crée donc un nouveau round
+        newRound();
+        // Modification du modèle --> notification des MastermindGameObserver pour qu'ils mettent à jour la vue
+        notifyNewRound();
+    }
 
+    public void newRound()
+    {
+        // Création du Round
+        Round round = new Round( _pawnNumber, _combinaisonNumber, _tryNumber, gameMode, mastermindGameDisplay, rounds.size() );
+        rounds.add(round);
+        current_round = rounds.get( rounds.size()-1 );
 
+        // Création du Controller associé au Round
+        RoundController roundController = new RoundController(round);
+        roundControllers.add(roundController);
+        current_roundController = roundControllers.get( roundControllers.size()-1 );
 
+        // L'Observer est déjà créé dans le constructeur de MastermindGame, on a juste à l'ajouter en tant qu'Observer du nouveau Round
+        //RoundObserver mastermindGameDisplay = new MastermindGameDisplay(this);
+        //roundObservers.add(mastermindGameDisplay);
+        current_round.addObserver(mastermindGameDisplay);
+        //current_roundObserver = roundObservers.get( roundObservers.size()-1 );
+
+        // On débloque la 1ère combinaison du nouveau round
+        Combination newCombination = current_round.getCurrentAttempt();     // Débloquage de la nouvelle tentative
+        newCombination.setBlocked(false);
+    }
+
+    private void notifyNewRound()
+    {
+        for( MastermindGameObserver mastermindGameObserver : mastermindGameObservers )
+        {
+            mastermindGameObserver.updateNewRound();
+        }
     }
 
     public boolean isGameFinished() {
-        return false;
+        boolean res = false;
+        if(rounds.size() > _numberOfRounds)
+        {
+            res = true;
+        }
+        return res;
     }
 
     public RoundController getCurrentRoundController() {
@@ -148,5 +202,22 @@ public class MastermindGame {
 
     public int getTryNumber() {
         return _tryNumber;
+    }
+
+    public String getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameFinished(boolean gameFinished) {
+        this.isGameFinished = gameFinished;
+        // Modification du modèle --> notification des MastermindGameObserver pour qu'ils mettent à jour la vue
+        notifyGameFinished();
+    }
+
+    public void notifyGameFinished() {
+        for( MastermindGameObserver mastermindGameObserver : mastermindGameObservers )
+        {
+            mastermindGameObserver.updateGameFinished();
+        }
     }
 }

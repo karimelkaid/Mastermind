@@ -23,6 +23,7 @@ public class RoundController {
     public void addPawn(Combination currentAttempt, int positionCase, Color currentPawnColor)
     {
         Color newPawnColor = currentPawnColor;
+        /*// même couleur que dans mon énumération PawnColor
         if (currentPawnColor.equals(Color.RED)){
             newPawnColor = Color.BLUE;
         }
@@ -32,9 +33,28 @@ public class RoundController {
         else if (currentPawnColor.equals(Color.GREEN)){
             newPawnColor = Color.YELLOW;
         }
-        else{
+        else if (currentPawnColor.equals(Color.YELLOW)){
+            newPawnColor = Color.ORANGE;
+        }
+        else if (currentPawnColor.equals(Color.ORANGE)){
+            newPawnColor = Color.PINK;
+        }
+        else if (currentPawnColor.equals(Color.PINK)){
+            newPawnColor = Color.MAGENTA;
+        }
+        else if (currentPawnColor.equals(Color.CYAN)){
+            newPawnColor = Color.WHITE;
+        }
+        else if (currentPawnColor.equals(Color.WHITE)){
+            newPawnColor = Color.BLACK;
+        }
+        else if (currentPawnColor.equals(Color.BLACK)){
             newPawnColor = Color.RED;
         }
+
+        else{
+            newPawnColor = Color.RED;
+        }*/
 
         // Modification de la couleur du pion dans le modèle
         currentAttempt.setPawn(positionCase, newPawnColor);
@@ -42,9 +62,20 @@ public class RoundController {
     }
 
 
-    public void generateClues(int numCombination)
+    public void generateClues(Combination combination)
     {
-        Combination combination = round.getCombination(numCombination);
+//        Combination combination = round.getCombination(numCombination);
+//        combination.generateClues();
+
         combination.generateClues();
     }
+
+    public void nextTentative() {
+        round.nextTentative();
+    }
+
+    public void blockCombination(Combination combination) {
+        combination.setBlocked(true);
+    }
+
 }

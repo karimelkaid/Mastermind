@@ -115,7 +115,7 @@ public class ViewStart extends JFrame {
             MastermindGame mastermindGame = new MastermindGame( playerName, gameMode, nbRounds, nbPawns, nbPawnsInCombination, nbAttempts );
 
             // Création de la vue MastermindGameDisplay en lui donnant le modèle MastermindGame
-            MastermindGameDisplay mastermindGameDisplay = new MastermindGameDisplay(mastermindGame);
+            //MastermindGameDisplay mastermindGameDisplay = new MastermindGameDisplay(mastermindGame);
 
         }
     }
