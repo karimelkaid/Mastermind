@@ -10,7 +10,7 @@ import static java.lang.constant.ConstantDescs.NULL;
 
 public class Round {
     private final String gameMode;
-    private int _score;
+    private int roundScore;
     private boolean endBool=false;
     private int pawnNumber;
     private int combinaisonNumber;
@@ -29,6 +29,7 @@ public class Round {
         this.tryNumber=tryNumber;
         this.combinaisonNumber=combinaisonNumber;
         this.gameMode = gameMode;
+        this.roundScore = 0;
         /*for(PawnColor color : PawnColor.values())
         {
             pawnsColors.add(color);
@@ -215,6 +216,43 @@ public class Round {
 
     public List<Combination> getAttempts() {
         return new ArrayList<>(attempts);
+    }
+
+    public void calculScore() {
+        // Récupération de la dernière tentative effectué par le joueur dans ce round (pas forcément la dernière position de la liste des tentatives car le joueur peut gagner avant)
+        Combination lastCombination = this.getCurrentAttempt();
+
+        // Calcul du score
+        if( gameMode.equals("Numerical") )
+        {
+           // Ici on peut directement récupérer le nombre de pion bien placés et mal placés
+            roundScore = 3*Integer.parseInt(lastCombination.getClues()[0]) + Integer.parseInt(lastCombination.getClues()[1]);
+        }
+        else
+        {
+            for(int i=0; i<lastCombination.getClues().length; i++)  // Parcours des indices de la combinaison
+            {
+                if( lastCombination.getClues()[i].equals("black") )
+                {
+                    roundScore = roundScore + 3;
+                }
+                else
+                {
+                    roundScore = roundScore + 1;
+                }
+            }
+
+            // Bonus de 4 points si le joueur joue en mode classique
+            if( gameMode.equals("Classic") )
+            {
+                roundScore+=4;
+            }
+        }
+
+    }
+
+    public int getRoundScore() {
+        return this.roundScore;
     }
 
    /* public void startRound(){

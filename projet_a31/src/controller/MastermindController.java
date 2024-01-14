@@ -18,4 +18,8 @@ public class MastermindController {
     public void setGameFinished(boolean gameFinished) {
         mastermindGame.setGameFinished(gameFinished);
     }
+
+    public void calculateNewScore() {
+        mastermindGame.calculateNewScore();
+    }
 }

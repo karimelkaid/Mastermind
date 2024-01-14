@@ -195,7 +195,7 @@ public class MastermindGame {
 
     public boolean isGameFinished() {
         boolean res = false;
-        if(rounds.size() > _numberOfRounds)
+        if(rounds.size() >= _numberOfRounds)
         {
             res = true;
         }
@@ -256,5 +256,23 @@ public class MastermindGame {
 
     public String getPlayerName() {
         return _playerName;
+    }
+
+    public void calculateNewScore() {
+        // Calcul du score du round actuel
+        current_round.calculScore();
+        _score = _score + current_round.getRoundScore();
+        notifyScoreChanged();
+    }
+
+    public void notifyScoreChanged() {
+        for( MastermindGameObserver mastermindGameObserver : mastermindGameObservers )
+        {
+            mastermindGameObserver.updateScoreChanged();
+        }
+    }
+
+    public boolean isGameWon() {
+        return true;
     }
 }

@@ -23,6 +23,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
 
     JButton btnNextRound;   // Déclaré ici car je dois le désactiver dans la méthode updateRoundFinish() et le réactiver dans la méthode updateNextAttempt()
     JLabel lblRound;
+    JLabel lblScore;
 
     boolean alreadyHandled = false;
 
@@ -42,7 +43,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         pnlInformations.setBackground(Color.RED);
 
         // Placer un JLabel dans le panel pnlInformations à l'Est pour le score
-        JLabel lblScore = new JLabel("Score : 0");
+        lblScore = new JLabel("Score : 0");
         pnlInformations.add(lblScore, BorderLayout.EAST);
         // Placer un autre JLabel dans le panel pnlInformations au Centre pour le nom du joueur
         JLabel lblPlayerName = new JLabel("Player : "+mastermindGame.getPlayerName());
@@ -90,6 +91,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
                 {
                     // Affichage de la dernière vue en lui transmettant le score et le nom du joueur
                     System.out.println("J'affiche la dernière vue");
+                    EndView endView = new EndView(mastermindGame.getScore(), mastermindGame.isGameWon(), mastermindGame.getPlayerName());
                 }
             }
         });
@@ -291,6 +293,18 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         btnNextRound.setEnabled(true);  // On réactive le bouton pour pouvoir voir les résultats
     }
 
+    @Override
+    public void updateScoreChanged() {
+        System.out.println("Score changed");
+
+        // MAJ du score dans le JLabel
+        // Calcul du score du round qui vient de se terminer
+        int newScore = mastermindGame.getScore();
+        System.out.println("New score = "+newScore);
+        // MAJ du score dans le JLabel
+        lblScore.setText("Score : "+newScore);
+    }
+
 
     /*public static String getColorName(Color color) {
         Map<Color, String> colorNames = new HashMap<>();
@@ -356,6 +370,14 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
     public void updateRoundFinish() {
         System.out.println("Round finished");
 
+        /*
+        // Calcul du score du round qui vient de se terminer
+        int newScore = mastermindGame.calculateNewScore();
+        System.out.println("New score = "+newScore);
+        // MAJ du score dans le JLabel
+        */
+        mastermindController.calculateNewScore();
+
         // Vérifies si la partie est finie
         if( mastermindGame.isGameFinished() )
         {
@@ -369,6 +391,8 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
             // Code pour passer au prochain round
             System.out.println("Game not finished");
             btnNextRound.setEnabled(true); // Réactiver le bouton pour passer au round suivant
+
+
 //            MastermindController mastermindController = new MastermindController(mastermindGame);
 //            mastermindController.nextRound();
         }

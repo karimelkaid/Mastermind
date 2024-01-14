@@ -22,8 +22,8 @@ public class GenerateCluesNumerical implements GenerateCluesStrategy{
             }
         }
 
-        res[0] = "Well placed : " + _wellPlaced;
-        res[1] = "Misplaced : " + _misplaces;
+        res[0] = String.valueOf(_wellPlaced);
+        res[1] = String.valueOf(_misplaces);
 
 
         return res;

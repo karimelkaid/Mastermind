@@ -4,4 +4,6 @@ public interface MastermindGameObserver {
     void updateNewRound();
 
     void updateGameFinished();
+
+    void updateScoreChanged();
 }
