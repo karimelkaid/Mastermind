@@ -20,26 +20,28 @@ public class Round {
     private List<Combination> attempts;
 
     private PawnColor[] secretCombination;
-    private List<PawnColor> randomTab= new ArrayList<PawnColor>();
+    private List<PawnColor> pawnsColors= new ArrayList<PawnColor>();
     private List<RoundObserver> roundObservers;
 
-    public Round(int pawnNumber, int combinaisonNumber, int tryNumber, String gameMode, RoundObserver mastermindGameDisplay, int roundNumber)
+    public Round(int pawnNumber, int combinaisonNumber, int tryNumber, String gameMode, RoundObserver mastermindGameDisplay, int roundNumber, List<PawnColor> pawnsColors)
     {
         this.pawnNumber=pawnNumber;
         this.tryNumber=tryNumber;
         this.combinaisonNumber=combinaisonNumber;
         this.gameMode = gameMode;
-        for(PawnColor color : PawnColor.values())
+        /*for(PawnColor color : PawnColor.values())
         {
-            randomTab.add(color);
+            pawnsColors.add(color);
             System.out.println(color);
-        }
+        }*/
+        this.pawnsColors = pawnsColors;
+
         this.roundNumber = roundNumber;
 
         this.attempts = new ArrayList<>();
         this.attemptNumber=1;
-        //this.secretCombination=this.generateCombination();
-        this.secretCombination= new PawnColor[]{PawnColor.BLUE, PawnColor.GREEN, PawnColor.RED, PawnColor.ORANGE};
+        generateCombination();
+        //this.secretCombination= new PawnColor[]{PawnColor.BLUE, PawnColor.GREEN, PawnColor.RED, PawnColor.ORANGE};
 
         this.roundObservers= new ArrayList<>();
 
@@ -58,14 +60,41 @@ public class Round {
             }
             else
             {
-                // Ajouté + tard le mode classic
-                System.out.println("Erreur : mode de jeu inconnu");
+                generateCluesStrategy = new GenerateCluesClassic();
             }
             Combination combination = new Combination(generateCluesStrategy, this.secretCombination, i, combinaisonNumber);
             combination.addRoundObserver( mastermindGameDisplay );
             inputCombination(combination);
         }
         // ------------------------------------------------
+
+    }
+
+    public List<PawnColor> getPawnsColors() {
+        return new ArrayList<>(pawnsColors);
+    }
+
+    private void generateCombination()
+    {
+        this.secretCombination = new PawnColor[combinaisonNumber];
+        List<PawnColor> coloursAlreadyChosen = new ArrayList<>();   // Liste des couleurs déjà choisies pour ne pas les rechoisir (on veut des couleurs toutes différentes)
+        for(int i = 0 ; i<secretCombination.length;i++){
+            this.secretCombination[i]= pawnsColors.get((int)(Math.random()*(PawnColor.values().length-0))+0);
+            // Si on tire le blanc ou la couleur tirée est déjà choisie, on recommence
+            if( this.secretCombination[i] == PawnColor.WHITE || coloursAlreadyChosen.contains(this.secretCombination[i]) )
+            {
+                this.secretCombination[i] = PawnColor.WHITE;
+                i--;
+            }
+            else
+            {
+                coloursAlreadyChosen.add(this.secretCombination[i]);
+            }
+        }
+        for(PawnColor color : secretCombination){
+            System.out.println("secretCombination : "+color);
+        }
+
 
     }
 
@@ -82,7 +111,7 @@ public class Round {
 
         PawnColor[] tabCombination = new PawnColor[combinaisonNumber];
         for(int i = 0 ; i<tabCombination.length;i++){
-            tabCombination[i]= randomTab.get((int)(Math.random()*(PawnColor.values().length-0))+0);
+            tabCombination[i]= pawnsColors.get((int)(Math.random()*(PawnColor.values().length-0))+0);
         }
         for(PawnColor color : tabCombination){
             System.out.println("TabCombi : "+color);
@@ -200,8 +229,8 @@ public class Round {
                 System.out.println("Enter value");
 
                 int choice = Integer.parseInt(myObj.nextLine());  // Read user input
-                System.out.println("choice is: " + randomTab.get(choice));  // Output user input
-                tabCombination[i]=randomTab.get(choice);
+                System.out.println("choice is: " + pawnsColors.get(choice));  // Output user input
+                tabCombination[i]=pawnsColors.get(choice);
             }
             Combination attempts = new Combination()
         }*/

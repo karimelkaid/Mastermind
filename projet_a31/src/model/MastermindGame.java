@@ -32,6 +32,8 @@ public class MastermindGame {
 
     private boolean isGameFinished;
 
+    private List<PawnColor> pawnsColors= new ArrayList<PawnColor>();    // Liste des couleurs des pions disponibles
+
     private MastermindGameDisplay mastermindGameDisplay;    // Observer associé aux rounds
 
     public MastermindGame(String _playerName, String gameMode, int _numberOfRounds, int _pawnNumber, int _combinaisonNumber, int _tryNumber){
@@ -44,6 +46,13 @@ public class MastermindGame {
         this._score = 0;
         this.isGameFinished = false;
 
+        // On prend les pawnNumber+1 premières couleurs car le 1er est la couche blanche et ce n'est pas une couleur pour un pion mais une case vide
+        for(int i=0; i<_pawnNumber+1; i++)
+        {
+            pawnsColors.add( PawnColor.values()[i] );
+        }
+
+
         this.rounds = new ArrayList<>();
         this.roundControllers = new ArrayList<>();
         this.roundObservers = new ArrayList<>();
@@ -51,7 +60,7 @@ public class MastermindGame {
         mastermindGameDisplay = new MastermindGameDisplay(this, new MastermindController(this));  // Création de la vue principale
 
         // Créations du 1er round avant d'instancier la vue
-        Round round = new Round( _pawnNumber, _combinaisonNumber, _tryNumber, gameMode, mastermindGameDisplay, 0 );
+        Round round = new Round( _pawnNumber, _combinaisonNumber, _tryNumber, gameMode, mastermindGameDisplay, 0, pawnsColors );
         rounds.add(round);
         current_round = rounds.get( rounds.size()-1 );
 
@@ -155,7 +164,7 @@ public class MastermindGame {
     public void newRound()
     {
         // Création du Round
-        Round round = new Round( _pawnNumber, _combinaisonNumber, _tryNumber, gameMode, mastermindGameDisplay, rounds.size() );
+        Round round = new Round( _pawnNumber, _combinaisonNumber, _tryNumber, gameMode, mastermindGameDisplay, rounds.size(), pawnsColors );
         rounds.add(round);
         current_round = rounds.get( rounds.size()-1 );
 
@@ -234,5 +243,9 @@ public class MastermindGame {
             }
         }
         return res;
+    }
+
+    public List<PawnColor> getPawnsColors() {
+        return new ArrayList<>(pawnsColors);
     }
 }

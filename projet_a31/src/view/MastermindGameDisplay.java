@@ -74,10 +74,18 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         btnNextRound.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                // Passage à la prochaine manche
-                mastermindController.nextRound();
-                // On désactive directement le bouton car on est dans un nouveau round
-                btnNextRound.setEnabled(false);
+                if( !mastermindGame.isGameFinished() )
+                {
+                    // Passage à la prochaine manche
+                    mastermindController.nextRound();
+                    // On désactive directement le bouton car on est dans un nouveau round
+                    btnNextRound.setEnabled(false);
+                }
+                else
+                {
+                    // Affichage de la dernière vue en lui transmettant le score et le nom du joueur
+                    System.out.println("J'affiche la dernière vue");
+                }
             }
         });
         pnlBottom.add(btnNextRound, BorderLayout.EAST);
@@ -169,10 +177,12 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         pnlRound.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlRound.setPreferredSize(new Dimension(600, 600));
 
+
+
         // Ajout d'un JButton pour chaque grille
         for(int i = mastermindGame.getAttemptsNumber() - 1; i >= 0; i--)    // On commence par la dernière ligne (la + haute) pour que les boutons possèdent un nom cohérent
         {
-            for(int j = 0; j < mastermindGame.getCombinationNumber() +1; j++)    // pas -1 pour mastermindGame.getCombinationNumber() pour mettre aussi la colonne représentant les indices
+            for(int j = 0; j < mastermindGame.getCombinationNumber() +1; j++)    // +1 pour mastermindGame.getCombinationNumber() pour mettre aussi la colonne représentant les indices
             {
                 // Si c'est la dernière colonne, on crée les indices
                 if( j == mastermindGame.getCombinationNumber() )
@@ -209,7 +219,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
                 }
                 else
                 {
-                    JComboBox<PawnColor> comboColor = new JComboBox<>(PawnColor.values());
+                    JComboBox<PawnColor> comboColor = new JComboBox<>((ComboBoxModel) mastermindGame.getPawnsColors());   // On ajoute dans la cbo les couleurs de la liste des couleurs possibles
                     comboColor.setName("comboColor" + i + j);
                     // Configure le rendu pour afficher les couleurs dans le JComboBox
                     comboColor.setRenderer(new DefaultListCellRenderer() {
@@ -268,6 +278,10 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
     @Override
     public void updateGameFinished() {
         System.out.println("Game finished");
+
+        // Changement du texte présent sur le bouton btnNextRound
+        btnNextRound.setText("See your results");
+        btnNextRound.setEnabled(true);  // On réactive le bouton pour pouvoir voir les résultats
     }
 
 
@@ -442,18 +456,17 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         if( pnlClue != null )
         {
             // Ajouter les nouveaux composants
-            int numberOfClues = combination.getClues().length;
-            for( int i = 0; i <numberOfClues ; i++ )
+
+            if( mastermindGame.getGameMode().equals("Easy") || mastermindGame.getGameMode().equals("Classic"))
             {
-                //pnlClue.setBackground(Color.YELLOW);
-                if( mastermindGame.getGameMode().equals("Easy") )
-                {
+                int numberOfClues = combination.getClues().length;
+                for( int i = 0; i <numberOfClues ; i++ ) {
+                    //pnlClue.setBackground(Color.YELLOW);
                     JLabel lblClue = new JLabel();
                     lblClue.setPreferredSize(new Dimension(12, 12));
                     lblClue.setOpaque(true);
                     lblClue.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                    if( combination.getClues()[i] == "black" )
-                    {
+                    if (combination.getClues()[i] == "black") {
                         lblClue.setBackground(Color.BLACK);
                     }
                     else
@@ -461,9 +474,27 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
                         lblClue.setBackground(Color.WHITE);
                     }
                     pnlClue.add(lblClue);
-
                 }
             }
+            else if( mastermindGame.getGameMode().equals("Numerical") )
+            {
+                // lbl pour les pions bien placés
+                JLabel lblClue = new JLabel();
+                //lblClue.setPreferredSize(new Dimension(12, 12));
+                lblClue.setOpaque(true);
+                lblClue.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                lblClue.setText(combination.getClues()[0]);
+                pnlClue.add(lblClue);
+
+                // Lbl pour les pions mal placés
+                JLabel lblClue2 = new JLabel();
+                //lblClue.setPreferredSize(new Dimension(12, 12));
+                lblClue2.setOpaque(true);
+                lblClue2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                lblClue2.setText(combination.getClues()[1]);
+                pnlClue.add(lblClue2);
+            }
+
             // Pour MAJ le panel des indices (pour afficher les nouveaux composants)
             pnlClue.revalidate();
             pnlClue.repaint();

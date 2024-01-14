@@ -17,16 +17,16 @@ public class Combination {
     private PawnColor[] secretCombination;  // Besoin pour générer les indices (en comparant avec la combinaison actuelle)
     private List<RoundObserver> roundObservers;
     private int numCombination;    // Numéro de la combinaison pour identifier la combinaison dans la liste des combinaisons du Round
+    private int combinationNumber;  // Nombre de pions possible dans une combinaison
 
     private boolean isBlocked;      // Pour savoir si la combinaison est bloquée ou non (si elle est bloquée, on ne peut pas la modifier)
 
     // numCombination pour pouvoir notifier le RoundObserver en lui passant la bonne combinaison (voir méthode updateAddPawn)
     public Combination(GenerateCluesStrategy generateCluesStrategy, PawnColor[] secretCombination, int numCombination, int combinationNumber)
     {
-        // REMPLACER LE 4 PAR UN PARAMÈTRE DES SETTINGS (que je vais passer en paramètre)
         pawns = new PawnColor[combinationNumber];
-        // Initialisation des pions à WHITE
-        for(int i=0; i<4; i++)
+        // Initialisation des pions à WHITE (=case vide)
+        for(int i=0; i<combinationNumber; i++)
         {
             pawns[i] = PawnColor.WHITE;
         }
@@ -39,6 +39,7 @@ public class Combination {
         this.secretCombination = secretCombination;
         this.roundObservers = new ArrayList<>();
         this.numCombination = numCombination;
+        this.combinationNumber = combinationNumber;
 
         // De base, nous bloquons toutes les combinaisons sauf la 1ère
         if( this.numCombination == 0 )
@@ -151,11 +152,11 @@ public class Combination {
     public void showClues()
     {
         System.out.println("------");
-        // Si le mode de jeu est numérique --> nous affichons la 1ère case UNIQUEMENT (car c'est la seule qui conntient la chaine nécessaire les reste sont vides)
+        // Si le mode de jeu est numérique --> nous affichons la 1ère case et la 2ème UNIQUEMENT (car c'est la seule qui conntient la chaine nécessaire les reste sont vides)
         if( this.generateCluesStrategy instanceof GenerateCluesNumerical )
         {
             System.out.println("Indices (mode numérique) : ");
-            System.out.println(clues[0]);
+            System.out.println(clues[0] + " " + clues[1]);
         }
         else
         {
@@ -253,7 +254,7 @@ public class Combination {
 
     public boolean isComplete() {
         boolean res = true;
-        for(int i=0; i<4; i++)
+        for(int i=0; i<this.combinationNumber && res==true; i++)    // Dès qu'on trouve une case vide, on arrête la boucle
         {
             if( pawns[i] == PawnColor.WHITE )
             {

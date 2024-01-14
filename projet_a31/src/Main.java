@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args)
     {
         ViewStart viewStart = new ViewStart();
-        MastermindGame mastermindGame = new MastermindGame("Jawad","Easy", 3,4,4,3);
+        //MastermindGame mastermindGame = new MastermindGame("Jawad","Classic", 3,4,6,3);
 
 
         /*
