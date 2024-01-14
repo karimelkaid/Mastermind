@@ -5,7 +5,6 @@ import controller.RoundController;
 import model.Combination;
 import model.MastermindGame;
 import model.PawnColor;
-import model.Round;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,13 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
     JPanel pnlRounds = new JPanel(cardLayout);  // Panel contenant les différents rounds
     JPanel pnlInformations;
     JPanel pnlRound;
-    JPanel pnlTextClue;     // Vérifier s'il doit être créé
+    JPanel pnlBottom;     // Vérifier s'il doit être créé
+
+    JButton btnNextRound;   // Déclaré ici car je dois le désactiver dans la méthode updateRoundFinish() et le réactiver dans la méthode updateNextAttempt()
+
+    boolean alreadyHandled = false;
+
+    //public boolean alreadyHandled = false; // Pour éviter de faire 2 fois la même action dans la méthode actionPerformed() des JComboBoxs
 
     public MastermindGameDisplay(MastermindGame mastermindGame, MastermindController mastermindController) {
         super("Mastermind");
@@ -29,6 +34,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         setLocationRelativeTo(null); // Pour centrer la fenêtre sur l'écran
 
         this.mastermindGame = mastermindGame;
+        this.mastermindController = mastermindController;
 
         // Instancier le panel pnlInformations avec un BorderLayout
         pnlInformations = new JPanel(new BorderLayout());
@@ -44,21 +50,120 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         this.add(pnlInformations, BorderLayout.NORTH);
 
         configureRoundsPanel();
+        configureBottomPanel();
 
         int PawnNumber = 3;
         int AttemptNumber = 5;
         int CombinationNumber = 6;
 
-        this.mastermindController = mastermindController;
 
 
         // Affichage de la fenêtre
         setVisible(true);
     }
 
+    public void configureBottomPanel() {
+        // Instanciaition du panel pnlBottom avec un BorderLayout + configuration
+        pnlBottom = new JPanel(new BorderLayout());
+        pnlBottom.setBackground(Color.GREEN);
+        pnlBottom.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Création d'un JButton à droite pour passer au Round suivant (est activé seulement si le Round est terminé pour voir les indices de la dernière tentative)
+        btnNextRound = new JButton("Next round");
+        btnNextRound.setEnabled(false);
+        btnNextRound.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                // Passage à la prochaine manche
+                mastermindController.nextRound();
+                // On désactive directement le bouton car on est dans un nouveau round
+                btnNextRound.setEnabled(false);
+            }
+        });
+        pnlBottom.add(btnNextRound, BorderLayout.EAST);
+
+        this.add(pnlBottom, BorderLayout.SOUTH);
+    }
+
     public void configureRoundsPanel()
     {
+        createRoundPanel( 0);
+
+        this.add(pnlRounds, BorderLayout.CENTER);
+
+        //this.add(pnlRound, BorderLayout.CENTER);
+
+
+    }
+
+    public void removeActionListener(JComboBox cbo)
+    {
+        for( ActionListener al : cbo.getActionListeners() )
+        {
+            cbo.removeActionListener(al);
+        }
+    }
+    public void addActionListener(JComboBox cbo)
+    {
+        cbo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+
+                        int currentCombinationNumber = mastermindGame.getCurrentRound().getCurrentAttempt().getNumCombination();
+                        if( currentCombinationNumber > 0 )
+                        {
+                            if( mastermindGame.getCurrentRound().getCombination( mastermindGame.getCurrentRound().getCurrentAttempt().getNumCombination()-1 ).isComplete() )
+                            {
+                                alreadyHandled = true;
+                            }
+                        }
+                        //alreadyHandled = true;
+
+                        JComboBox cb = (JComboBox) e.getSource();
+                        PawnColor selectedColor = (PawnColor) cb.getSelectedItem();
+                        cb.setBackground(getColorFromPawn(selectedColor));
+
+                        int positionCase = getPositionBox(cbo.getName());   // Récupère la position de la case dans la combinaison
+                        Combination currentAttempt = mastermindGame.getCurrentRound().getCurrentAttempt();
+                        RoundController currentRoundController = mastermindGame.getCurrentRoundController();
+                        PawnColor selectedColorr = (PawnColor) cbo.getSelectedItem();
+                        currentRoundController.addPawn(currentAttempt, positionCase, getColorFromPawn(selectedColorr));
+                }
+            }
+        });
+
+    }
+
+    private Color getColorFromPawn(PawnColor pawnColor) {
+        switch (pawnColor) {
+            case RED:
+                return Color.RED;
+            case ORANGE:
+                return Color.ORANGE;
+            case GREEN:
+                return Color.GREEN;
+            case BLUE:
+                return Color.BLUE;
+            case YELLOW:
+                return Color.YELLOW;
+            case PINK:
+                return Color.PINK;
+            case WHITE:
+                return Color.WHITE;
+            case CYAN:
+                return Color.CYAN;
+            case GRAY:
+                return Color.GRAY;
+            default:
+                return Color.WHITE;
+        }
+    }
+
+    public void createRoundPanel(int roundNumber)
+    {
         pnlRound = new JPanel();
+        pnlRounds.setName("round"+roundNumber);
         pnlRound.setBackground(Color.BLUE);
         pnlRound.setLayout(new GridLayout(mastermindGame.getAttemptsNumber(), mastermindGame.getCombinationNumber()+1));  // +1 pour les indices
         pnlRound.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -123,129 +228,11 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
                     // Configure le JComboBox pour changer la couleur de fond lorsque un élément est sélectionné
                     comboColor.setBackground(getColorFromPawn((PawnColor) comboColor.getSelectedItem()));
                     comboColor.setPreferredSize(new Dimension(50, 50));
+                    addActionListener(comboColor);
                     comboColor.setEnabled(false);   // De base, on bloque toutes les combinaisons sauf la 1ère
 
                     if (i == 0) {
                         comboColor.setEnabled(true);    // On débloque la 1ère combinaison uniquement
-                        addActionListener(comboColor);
-                    }
-
-                    pnlRound.add(comboColor);
-
-                }
-            }
-        }
-        String namePanel = "round"+0;   // J'initialise le cardPanel avec le 1er round
-        pnlRounds.add(pnlRound, namePanel);
-
-        this.add(pnlRounds, BorderLayout.CENTER);
-
-        //this.add(pnlRound, BorderLayout.CENTER);
-
-
-    }
-
-    public void removeActionListener(JComboBox cbo)
-    {
-        for( ActionListener al : cbo.getActionListeners() )
-        {
-            cbo.removeActionListener(al);
-        }
-    }
-    public void addActionListener(JComboBox cbo)
-    {
-        cbo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JComboBox cb = (JComboBox) e.getSource();
-                PawnColor selectedColor = (PawnColor) cb.getSelectedItem();
-                cb.setBackground(getColorFromPawn(selectedColor));
-
-                int positionCase = getPositionBox(cbo.getName());   // Récupère la position de la case dans la combinaison
-                Combination currentAttempt = mastermindGame.getCurrentRound().getCurrentAttempt();
-                RoundController currentRoundController = mastermindGame.getCurrentRoundController();
-                PawnColor selectedColorr = (PawnColor) cbo.getSelectedItem();
-                currentRoundController.addPawn(currentAttempt, positionCase, getColorFromPawn(selectedColorr));
-            }
-        });
-
-    }
-
-    private Color getColorFromPawn(PawnColor pawnColor) {
-        switch (pawnColor) {
-            case RED:
-                return Color.RED;
-            case ORANGE:
-                return Color.ORANGE;
-            case GREEN:
-                return Color.GREEN;
-            case BLUE:
-                return Color.BLUE;
-            case YELLOW:
-                return Color.YELLOW;
-            case PINK:
-                return Color.PINK;
-            case WHITE:
-                return Color.WHITE;
-            case CYAN:
-                return Color.CYAN;
-            case GRAY:
-                return Color.GRAY;
-            default:
-                return Color.WHITE;
-        }
-    }
-
-    public void createRoundPanel(int roundNumber)
-    {
-        pnlRound = new JPanel();
-        pnlRounds.setName("round"+roundNumber);
-        pnlRound.setBackground(Color.BLUE);
-        pnlRound.setLayout(new GridLayout(mastermindGame.getAttemptsNumber(), mastermindGame.getCombinationNumber()+1));  // +1 pour les indices
-        pnlRound.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        pnlRound.setPreferredSize(new Dimension(600, 600));
-
-        // Ajout d'un JButton pour chaque grille
-        for(int i = mastermindGame.getAttemptsNumber() - 1; i >= 0; i--)    // On commence par la dernière ligne (la + haute) pour que les boutons possèdent un nom cohérent
-        {
-            for(int j = 0; j < mastermindGame.getCombinationNumber() +1; j++)    // pas -1 pour mastermindGame.getCombinationNumber() pour mettre aussi la colonne représentant les indices
-            {
-                // Si c'est la dernière colonne, on crée les indices
-                if( j == mastermindGame.getCombinationNumber() )
-                {
-                    // Création du JPanel des indices
-                    JPanel pnlClue = new JPanel(new FlowLayout());
-                    pnlClue.setName("cluePanel"+i);
-                    pnlClue.setPreferredSize(new Dimension(50, 50));
-                    pnlClue.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                    pnlRound.add(pnlClue); // Ajouter le JPanel des indices à la grille
-                }
-                else
-                {
-                    JComboBox<PawnColor> comboColor = new JComboBox<>(PawnColor.values());
-                    comboColor.setName("comboColor" + i + j);
-                    // Configure le rendu pour afficher les couleurs dans le JComboBox
-                    comboColor.setRenderer(new DefaultListCellRenderer() {
-                        @Override
-                        public Component getListCellRendererComponent(JList<?> list, Object value, int index,
-                                                                      boolean isSelected, boolean cellHasFocus) {
-                            Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                            if (value instanceof PawnColor) {
-                                PawnColor color = (PawnColor) value;
-                                renderer.setBackground(getColorFromPawn(color));
-                            }
-                            return renderer;
-                        }
-                    });
-
-                    // Configure le JComboBox pour changer la couleur de fond lorsque un élément est sélectionné
-                    comboColor.setBackground(getColorFromPawn((PawnColor) comboColor.getSelectedItem()));
-                    comboColor.setPreferredSize(new Dimension(50, 50));
-                    // Valeur sélectionné = white
-                    comboColor.setSelectedIndex(0);     // Pour que la couleur sélectionnée soit blanche par défaut
-
-                    if (i == 0) {
-                        addActionListener(comboColor);
                     }
 
                     pnlRound.add(comboColor);
@@ -360,8 +347,9 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         {
             // Code pour passer au prochain round
             System.out.println("Game not finished");
-            MastermindController mastermindController = new MastermindController(mastermindGame);
-            mastermindController.nextRound();
+            btnNextRound.setEnabled(true); // Réactiver le bouton pour passer au round suivant
+//            MastermindController mastermindController = new MastermindController(mastermindGame);
+//            mastermindController.nextRound();
         }
     }
 
@@ -402,6 +390,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
     public void updateCombinationFinish(Combination combination) {
         System.out.println("Combination finished");
 
+        alreadyHandled = false;
         /*
         // Génération des indices
         combination.generateClues();
@@ -453,7 +442,8 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         if( pnlClue != null )
         {
             // Ajouter les nouveaux composants
-            for( int i = 0; i < combination.getClues().length; i++ )
+            int numberOfClues = combination.getClues().length;
+            for( int i = 0; i <numberOfClues ; i++ )
             {
                 //pnlClue.setBackground(Color.YELLOW);
                 if( mastermindGame.getGameMode().equals("Easy") )
@@ -524,7 +514,7 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         }
         else
         {
-            // J'ajoute les MouseListener aux JComboBoxs de la combinaison pour pouvoir les modifier
+            // J'ajoute les ActionListener aux JComboBoxs de la combinaison et je réactive les JComboBoxs
             for( Component c : pnlRound.getComponents() )
             {
                 if( c instanceof JComboBox )
@@ -532,7 +522,8 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
                     if( c.getName().contains("comboColor"+combination.getNumCombination()) )   // Si le nom du bouton contient btnPawn+numCombination alors c'est un bouton de la combinaison
                     {
                         JComboBox cboColor = (JComboBox) c;
-                        addActionListener(cboColor);
+                        //addActionListener(cboColor);
+                        c.setEnabled(true);
                     }
                 }
             }
@@ -540,6 +531,10 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
 
             System.out.println("Combination "+ combination.getNumCombination() +" unblocked");
         }
+
+        // Etant donné que la combinaison est bloquée, on peut remettre alreadHandled à false pour la prochaine tentative
+        //this.alreadyHandled = false;
+
 
         /*// Je bloque la combinaison
         // Trouver le JPanel correspondant à la combinaison
@@ -567,17 +562,19 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
         //System.out.println("Next attempt = " + attemptNumber);
 
         // Ajout des MouseListener aux comboboxs de la nouvelle tentative (pour pouvoir les modifier)
-        for( Component c : pnlRound.getComponents() )
-        {
-            if( c instanceof JComboBox )
-            {
-                if( c.getName().contains("comboColor"+attemptNumber) )   // Si le nom du bouton contient btnPawn+numCombination alors c'est un bouton de la combinaison
-                {
-                    JComboBox cboColor = (JComboBox) c;
-                    addActionListener(cboColor);
-                }
-            }
-        }
+//        for( Component c : pnlRound.getComponents() )
+//        {
+//            if( c instanceof JComboBox )
+//            {
+//                if( c.getName().contains("comboColor"+attemptNumber) )   // Si le nom du bouton contient btnPawn+numCombination alors c'est un bouton de la combinaison
+//                {
+//                    JComboBox cboColor = (JComboBox) c;
+//                    addActionListener(cboColor);
+//                }
+//            }
+//        }
+
+        //this.alreadyHandled = false;
 
 
 }

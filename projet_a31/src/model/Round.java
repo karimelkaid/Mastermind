@@ -61,7 +61,7 @@ public class Round {
                 // Ajouté + tard le mode classic
                 System.out.println("Erreur : mode de jeu inconnu");
             }
-            Combination combination = new Combination(generateCluesStrategy, this.secretCombination, i);
+            Combination combination = new Combination(generateCluesStrategy, this.secretCombination, i, combinaisonNumber);
             combination.addRoundObserver( mastermindGameDisplay );
             inputCombination(combination);
         }

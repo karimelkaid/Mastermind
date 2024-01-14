@@ -21,13 +21,18 @@ public class Combination {
     private boolean isBlocked;      // Pour savoir si la combinaison est bloquée ou non (si elle est bloquée, on ne peut pas la modifier)
 
     // numCombination pour pouvoir notifier le RoundObserver en lui passant la bonne combinaison (voir méthode updateAddPawn)
-    public Combination(GenerateCluesStrategy generateCluesStrategy, PawnColor[] secretCombination, int numCombination)
+    public Combination(GenerateCluesStrategy generateCluesStrategy, PawnColor[] secretCombination, int numCombination, int combinationNumber)
     {
         // REMPLACER LE 4 PAR UN PARAMÈTRE DES SETTINGS (que je vais passer en paramètre)
-        pawns = new PawnColor[4];
+        pawns = new PawnColor[combinationNumber];
+        // Initialisation des pions à WHITE
+        for(int i=0; i<4; i++)
+        {
+            pawns[i] = PawnColor.WHITE;
+        }
         //tab_clue = new Clue[4];
 
-        clues = new String[4];
+        clues = new String[combinationNumber];
 
 
         this.generateCluesStrategy = generateCluesStrategy;
@@ -61,6 +66,10 @@ public class Combination {
 
     public String[] getClues() {
         return clues;
+    }
+
+    public PawnColor[] getPawns() {
+        return pawns;
     }
 
     public void notifyAddPawn(int boxPosition , PawnColor pawnColorAdd)
@@ -246,7 +255,7 @@ public class Combination {
         boolean res = true;
         for(int i=0; i<4; i++)
         {
-            if( pawns[i] == null )
+            if( pawns[i] == PawnColor.WHITE )
             {
                 res = false;
             }

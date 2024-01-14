@@ -220,4 +220,19 @@ public class MastermindGame {
             mastermindGameObserver.updateGameFinished();
         }
     }
+
+    public int getNumberEmptyCellsInCurrentCombination() {
+        int res = 0;
+        Combination currentCombination = current_round.getCurrentAttempt();
+        int size = currentCombination.getPawns().length;
+        for(int i=0; i<size-1; i++)
+        {
+            PawnColor currentPawnColor = currentCombination.getPawn(i);
+            if( currentPawnColor == null || currentPawnColor == PawnColor.WHITE )
+            {
+                res++;
+            }
+        }
+        return res;
+    }
 }
