@@ -1,0 +1,156 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+
+class MastermindApp{
+    + {static} main(args : String[])
+}
+
+' ICI METTRE QUE LE MastermindApp INSTANCIE LES CLASSES ETC...
+
+
+package view{
+    class View_start_game{
+        + <<Create>>View_start_game()
+    }
+
+    class MastermindGameDisplay implements RoundObserver{
+        + <<Create>>MastermindGameDisplay()
+        + updateRoundFinish()
+        + updateCombination(numCombination:Integer, pawnColor:PawnColor)
+    }
+
+    class View_end_game{
+        + <<Create>>View_end_game()
+    }
+
+    interface RoundObserver{
+        + updateRoundFinish()
+        + updateCombination(numCombination:Integer, pawnColor:PawnColor)
+    }
+}
+
+package model{
+    class MastermindGame {
+    - _playerName : String
+    - _gameMode : String
+    - _numberOfRounds : Integer
+    - _pawnNumber : Integer
+    - _combinaisonNumber : Integer
+    - _tryNumber : Integer
+
+    + <<Create>> MastermindGame( _playerName : String, _numberOfRounds : Integer, _pawnNumber : Integer, _combinaisonNumber:Integer, _tryNumber:Integer )
+      + startGame()
+      + makeSecretCombination()
+      + isGameOver(): Boolean
+      + getScore(): Integer
+    }
+
+    class Round {
+      - tryNumber : Integer
+      - attemptNumber : Integer
+
+      + <<Create>> Round(pawnNumber : Integer,combinationNumber:Integer, tryNumber:Integer)
+
+      + nextTentative()
+      + verifyCombination(attempt : Combination) : Boolean
+      + notifyRoundFinish()
+      + addRoundObserver(roundObserver: RoundObserver)
+      + inputCombination(combination : Combination)
+      + play() : Integer
+    }
+
+    Round --"1\n-secretCombination" PawnColor : has >
+
+
+    class Combination{
+        - clues : String[]
+        - numCombination : Integer
+        + <<Create>> Combination(generateCluesStrategy:GenerateCluesStrategy, secretCombination:PawnColor[], numCombination:Integer)
+        + addRoundObserver(roundObserver : RoundObserver)
+        + notifyAddPawn(addedPawn : PawnColor)
+        + setStrategy(generateCluesStrategy:GenerateCluesStrategy)
+        + addPawn(pawn : PawnColor)
+        + removePawn(pawn : PawnColor)
+        + getPawn(i:Integer) : PawnColor
+        + generateClues()
+        + showPawns()
+        + showClues()
+    }
+
+    Combination --"1\n-secretCombination" PawnColor : has >
+    Combination --"*\n-roundObservers" RoundObserver : has >
+
+
+    interface GenerateCluesStrategy
+    {
+        + generateClues() : String[]
+    }
+
+    Combination o-- "1\n-generateCluesStrategy" GenerateCluesStrategy : has >
+
+    class GenerateCluesEasy implements GenerateCluesStrategy
+    {
+        + <<Create>> GenerateCluesEasy()
+        + generateClues(pawns: PawnColor[], secretCombination: PawnColor[]) : String[]
+    }
+
+    class GenerateCluesClassic implements GenerateCluesStrategy
+    {
+        + <<Create>> GenerateCluesClassic()
+        + generateClues(pawns: PawnColor[], secretCombination: PawnColor[]) : String[]
+    }
+
+    class GenerateCluesNumerical implements GenerateCluesStrategy
+    {
+        + <<Create>> GenerateCluesNumerical()
+        + generateClues(pawns: PawnColor[], secretCombination: PawnColor[]) : String[]
+    }
+
+    enum PawnColor{
+        RED
+        ORANGE
+        BLUE
+        GREEN
+    }
+
+
+}
+
+package controller{
+    class RoundController{
+        + <<Create>> RoundController(mastermindGame : MastermindGame)
+
+        + makeSecretCombination()
+        + addPawn(numCombination : Integer, pawn : PawnColor)
+        + removePawn(numCombination : Integer, pawn : PawnColor)
+        + generateClues(numCombination : Integer)
+    }
+}
+
+MastermindGameDisplay --"1\n-roundController" RoundController : send user request >
+
+
+RoundController --"1\n-round" Round : edit >
+
+
+
+RoundObserver ---"1\n-round" Round : observes >
+
+
+
+MastermindGame --"*\n-rounds" Round : has >
+MastermindGame --"1\n-secretCombination" Combination : has >
+
+
+
+Combination ---"*\npawns" PawnColor : contains >
+
+Round --> "*\n-attempts" Combination
+
+@enduml
+
