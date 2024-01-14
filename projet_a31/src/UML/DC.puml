@@ -14,8 +14,8 @@ class MastermindApp{
 
 
 package view{
-    class View_start_game{
-        + <<Create>>View_start_game()
+    class ViewStart{
+        + <<Create>>ViewStart()
     }
 
     class MastermindGameDisplay implements RoundObserver{
@@ -24,32 +24,58 @@ package view{
         + updateCombination(numCombination:Integer, pawnColor:PawnColor)
     }
 
-    class View_end_game{
-        + <<Create>>View_end_game()
+    class ViewEnd{
+        + <<Create>>ViewEnd()
     }
 
     interface RoundObserver{
         + updateRoundFinish()
         + updateCombination(numCombination:Integer, pawnColor:PawnColor)
     }
+
+    interface MastermindGameObserver{
+        + updateNewRound()
+        + updateGameFinished
+        + updateScoreChanged()
+    }
 }
 
 package model{
     class MastermindGame {
-    - _playerName : String
-    - _gameMode : String
-    - _numberOfRounds : Integer
-    - _pawnNumber : Integer
-    - _combinaisonNumber : Integer
-    - _tryNumber : Integer
+    - playerName : String
+    - gameMode : String
+    - numberOfRounds : Integer
+    - pawnNumber : Integer
+    - combinaisonNumber : Integer
+    - tryNumber : Integer
 
     + <<Create>> MastermindGame( _playerName : String, _numberOfRounds : Integer, _pawnNumber : Integer, _combinaisonNumber:Integer, _tryNumber:Integer )
-      + startGame()
-      + makeSecretCombination()
-      + isGameOver(): Boolean
-      + getScore(): Integer
+    + addMastermindGameObserver( mastermindGameObserver : MastermindGameObserver )
+    + getPawnNumber() : Integer
+    + start()
+    + getAttemptsNumber() : Integer
+    + getCombinationNumber() : Integer
+    + isGameOver() : Boolean
+    + nextRound()
+    + newRound()
+    - notifyNewRound()
+    + isGameFinished() : Boolean
+    + makeSecretCombination()
+    + getCurrentRoundController() : RoundController
+    + getCurrentRound() : Round
+    + getTryNumber() : Integer
+    + getGameMode() : String
+    + setGameFinished(gameFinished : Boolean)
+    + isGameOver(): Boolean
+    + getScore(): Integer
+    + notifyGameFinished()
+    + getNumberEmptyCellsInCurrentCombination() : Integer
+    + getPawnsColors() : PawnColor[]
+    + getRoundNumber() : Integer
+    + getPlayerName() : String
+    + calculateNewScore()
+    + notifyScoreChanged()
     }
-
     class Round {
       - tryNumber : Integer
       - attemptNumber : Integer
@@ -59,9 +85,11 @@ package model{
       + nextTentative()
       + verifyCombination(attempt : Combination) : Boolean
       + notifyRoundFinish()
+      + notifyNextAttempt()
       + addRoundObserver(roundObserver: RoundObserver)
       + inputCombination(combination : Combination)
       + play() : Integer
+      + getCombination(numCombination : Integer) : Combination
     }
 
     Round --"1\n-secretCombination" PawnColor : has >
@@ -127,8 +155,18 @@ package controller{
 
         + makeSecretCombination()
         + addPawn(numCombination : Integer, pawn : PawnColor)
-        + removePawn(numCombination : Integer, pawn : PawnColor)
         + generateClues(numCombination : Integer)
+        + nextTentative()
+        + blockCombination(combination : Combination)
+    }
+    
+    class MastermindController{
+        - mastermindGame : MastermindGame
+        + <<Create>> MastermindController(mastermindGame : MastermindGame)
+
+        + nextRound()
+        + setGameFinished(gameFinished : bool)
+        + calculateNewScore()
     }
 }
 
