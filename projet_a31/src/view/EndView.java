@@ -1,5 +1,7 @@
 package view;
 
+import model.MastermindGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,8 +13,10 @@ public class EndView extends JFrame {
     private JButton replayButton;
     private JButton exitButton;
     private JPanel mainPanel; // Panneau principal
+    private MastermindGame mastermindGame;
 
-    public EndView(int score, boolean hasWon, String playerName) {
+    public EndView(MastermindGame mastermindGame)
+    {
         // Configuration de la fenêtre
         setTitle("Fin de Partie");
         setSize(600, 800);
@@ -20,22 +24,17 @@ public class EndView extends JFrame {
         setLocationRelativeTo(null); // Pour centrer la fenêtre sur l'écran
         getContentPane().setBackground(Color.BLACK); // Couleur de fond
 
+        this.mastermindGame = mastermindGame;
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(new Color(0, 51, 102)); // Couleur de fond du panneau
         GridBagConstraints c = new GridBagConstraints();
 
         // Configuration du scoreLabel
-        scoreLabel = createLabel("Votre score : " + score, Color.WHITE);
+        scoreLabel = createLabel("Votre score : " + mastermindGame.getScore(), Color.WHITE);
         c.gridx = 0;
         c.gridy = 0;
         c.insets = new Insets(10, 0, 10, 0);
         mainPanel.add(scoreLabel, c);
-
-        // Configuration du resultLabel
-        String resultText = hasWon ? "Bravo "+playerName+", vous avez gagné !" : "Dommage "+playerName+", vous avez perdu.";
-        resultLabel = createLabel(resultText, hasWon ? Color.GREEN : Color.RED);
-        c.gridy = 1;
-        mainPanel.add(resultLabel, c);
 
         // Configuration des boutons
         replayButton = createButton("Rejouer");
@@ -51,14 +50,18 @@ public class EndView extends JFrame {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Logique pour quitter l'application
+                // Quitter l'application
                 System.exit(0);
             }
         });
         replayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Logique pour le bouton (à définir selon les besoins)
+                System.out.println("Je vais relancer une partie (avec les mêmes paramètres)");
+
+                // Création du modèle MastermindGame
+                MastermindGame newMastermindGame = new MastermindGame(  mastermindGame.getPlayerName() , mastermindGame.getGameMode(), mastermindGame.getRoundNumber(), mastermindGame.getPawnNumber(), mastermindGame.getCombinationNumber(), mastermindGame.getTryNumber() );
+                dispose();  // Fermeture de la fenêtre actuelle
             }
         });
 

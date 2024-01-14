@@ -84,6 +84,11 @@ public class MastermindGame {
         mastermindGameObservers.add(mastermindGameObserver);
     }
 
+    public int getPawnNumber()
+    {
+        return this._pawnNumber;
+    }
+
 
 
     public void start(){
@@ -270,9 +275,5 @@ public class MastermindGame {
         {
             mastermindGameObserver.updateScoreChanged();
         }
-    }
-
-    public boolean isGameWon() {
-        return true;
     }
 }

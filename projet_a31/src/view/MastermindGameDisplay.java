@@ -91,7 +91,8 @@ public class MastermindGameDisplay extends JFrame implements RoundObserver, Mast
                 {
                     // Affichage de la dernière vue en lui transmettant le score et le nom du joueur
                     System.out.println("J'affiche la dernière vue");
-                    EndView endView = new EndView(mastermindGame.getScore(), mastermindGame.isGameWon(), mastermindGame.getPlayerName());
+                    EndView endView = new EndView(mastermindGame);
+                    dispose();  // Fermeture de la fenêtre actuelle
                 }
             }
         });
