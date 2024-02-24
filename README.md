@@ -86,7 +86,7 @@ Documents
 - le **diagramme de classes** UML
 - le **code source**
 - un **exécutable au format JAR**
-- un **mode d'emploi** nommé `INSTALL.md` à la racine de votre projet, qui explique comment installer et lancer votre application
+- un **mode d'emploi** nommé `INSTALL.md` à la racine de votre projet, qui explique comment installer et lancer notre application
 - un **rapport** pour présenter nos nouveaux choix de conception depuis le 1er rendu et expliquer les raisons des évolutions des choix de conception qui avaient été annoncés au 1er rendu.
 
 La version finale est disponible sur notre dépôt Git **sur une branche nommé `rendu2`**.
