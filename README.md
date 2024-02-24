@@ -1,6 +1,8 @@
 Mastermind
 ==========
 
+La version finale est disponible sur notre dépôt Git **sur une branche nommé `rendu2`**.
+
 ![](mastermind.jpg)
 
 L'objectif de ce projet est de concevoir une application permettant à un joueur de jouer au mastermind contre l'ordinateur.
@@ -88,5 +90,3 @@ Documents
 - un **exécutable au format JAR**
 - un **mode d'emploi** nommé `INSTALL.md` à la racine de votre projet, qui explique comment installer et lancer notre application
 - un **rapport** pour présenter nos nouveaux choix de conception depuis le 1er rendu et expliquer les raisons des évolutions des choix de conception qui avaient été annoncés au 1er rendu.
-
-La version finale est disponible sur notre dépôt Git **sur une branche nommé `rendu2`**.
