@@ -5,23 +5,6 @@ Mastermind
 
 L'objectif de ce projet est de concevoir une application permettant à un joueur de jouer au mastermind contre l'ordinateur.
 
-Consignes générales
--------------------
-
-#### Pour démarrer avec le dépôt Git
-
-1. Créez un groupe `nom1-nom2` où nom1 et nom2 sont les noms de famille des deux membres du binôme
-1. Forkez le dépôt https://git.unistra.fr/a313/a31-mastermind dans le groupe créé ci-dessus
-1. Ajoutez le responsable du module et votre enseignant de TD/TP comme Reporter de votre dépôt
-
-#### Pour toute la durée du projet
-
-- Ce projet est à réaliser **en binôme**.
-- Vous devez concevoir en UML et implémenter en Java le jeu du Mastermind, en respectant une **architecture MVC** et en proposant une **interface graphique en Swing**.
-- Vous devez respecter les **principes de conception** et mettre en œuvre les **patrons de conception** vus en cours, **lorsque cela est pertinent**. Attention, il ne s'agit pas d'essayer d'utiliser tous les patrons de conception vus en cours !
-- Vous rédigerez parallèlement **un (ou des) rapports** pour expliquer vos choix de conception. Il est possible aussi que vous soyez amenés à renoncer à une partie du développement par manque de temps. Dans ce cas, le rapport est l’endroit où le signaler ("il aurait fallu faire *ceci* mais je n’avais pas assez de temps devant moi et j’ai préféré me concentrer sur *cela* parce que ...").
-- Votre dépôt devra être **mis à jour au minimum après chaque séance de TP** de façon à ce que nous puissions évaluer votre démarche sur toute la durée du projet.
-
 
 Les règles du jeu
 -----------------
@@ -97,28 +80,8 @@ Bonus
 
 Pouvoir recommencer une partie sans relancer l'application.
 
-Les rendus
+Documents
 ----------
-
-### 1er rendu
-
-Date limite : le dimanche **10/12 à 23h59**
-
-Documents :
-
-- le **diagramme de classes** UML
-  - le package `model` doit être décris en anticipant tout le développement
-  - les packages `controller` et `view` doivent proposer une version de base mais peuvent être incomplets
-- le **code source**
-- un **rapport** pour expliquer vos choix de conception
-
-Le rendu est à faire sur votre dépôt Git **sur une branche nommée `rendu1`**.
-
-### 2ème rendu
-
-Date limite : le dimanche **14/01 à 23h59**
-
-Documents :
 
 - le **diagramme de classes** UML
 	- il doit être entièrement cohérent avec le code
