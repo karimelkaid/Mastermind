@@ -30,7 +30,7 @@ Au niveau du vocabulaire, nous emploierons les termes suivants :
 Les fonctionnalités
 -------------------
 
-Vous devez modéliser et implémenter :
+Nous devons modéliser et implémenter :
 
 - la génération de la combinaison secrète,
 - la génération des indices associés à une combinaison proposée par le joueur,
@@ -40,7 +40,7 @@ Vous devez modéliser et implémenter :
 
 en prenant en compte ces spécificités :
 
-- votre application doit disposer au maximum de **8 pions différents**
+- notre application doit disposer au maximum de **8 pions différents**
 - avant de démarrer une partie, le joueur fixe ces paramètres qui seront les mêmes pour toutes ses manches :
   - le **nombre de manches** : 1 minimum, 3 par défaut, 5 maximum
   - le **nombre de pions disponibles** : 4 minimum, 8 par défaut, 8 maximum
@@ -52,7 +52,7 @@ en prenant en compte ces spécificités :
 L'interface graphique
 ---------------------
 
-Votre application doit proposer 3 écrans :
+Notre application doit proposer 3 écrans :
 
 - un **écran de démarrage** pour choisir les paramètres : nom du joueur, type de partie, etc.
 - un **écran de jeu** avec le plateau qui affiche les combinaisons tentées, les indices associés, etc.
@@ -84,17 +84,9 @@ Documents
 ----------
 
 - le **diagramme de classes** UML
-	- il doit être entièrement cohérent avec le code
-	- il doit représenter l'intégralité de votre application
 - le **code source**
 - un **exécutable au format JAR**
 - un **mode d'emploi** nommé `INSTALL.md` à la racine de votre projet, qui explique comment installer et lancer votre application
-- un **rapport** pour présenter vos nouveaux choix de conception depuis le 1er rendu et expliquer les raisons des évolutions des choix de conception qui avaient été annoncés au 1er rendu.
+- un **rapport** pour présenter nos nouveaux choix de conception depuis le 1er rendu et expliquer les raisons des évolutions des choix de conception qui avaient été annoncés au 1er rendu.
 
-Le rendu est à faire sur votre dépôt Git **sur une branche nommé `rendu2`**.
-
-### Précisions
-
-- Vos diagrammes UML doivent être au format PlantUML et svg,
-- À la fin du projet, votre dépôt devra contenir au minimum une branche `rendu1` et une branche `rendu2`, ce seront les seules branches évaluées. Vous êtes libre de gérer le reste de votre dépôt comme vous le souhaitez.
-- Pensez à vérifier que votre exécutable fonctionne sur Linux, Windows et Mac.
+La version finale est dosponible sur notre dépôt Git **sur une branche nommé `rendu2`**.
