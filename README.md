@@ -43,6 +43,8 @@ Nous devons modéliser et implémenter :
 - la détection de la victoire et de la défaite du joueur,
 - la gestion des manches et des parties,
 - la gestion du score
+- pouvoir recommencer une partie sans relancer l'application.
+
 
 en prenant en compte ces spécificités :
 
@@ -80,11 +82,6 @@ L'affichage des indices dépend du mode choisit au niveau des paramètres :
 - **mode "facile"** : les jetons noirs et blancs sont affichés en correspondance de la combinaison proposée par le joueur (i.e. à la même place)
 - **mode "classique"** (mode par défaut) : les jetons noirs sont affichés en premier, puis les jetons blancs
 - **mode numérique** : on affiche le nombre de pions bien placés et le nombre de pions mal placés.
-
-Bonus
------
-
-Pouvoir recommencer une partie sans relancer l'application.
 
 Documents
 ----------
