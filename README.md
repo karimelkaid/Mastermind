@@ -1,7 +1,8 @@
 Mastermind
 ==========
 
-###La version finale est disponible sur notre dépôt Git **sur une branche nommé `rendu2`**.
+La version finale est disponible sur notre dépôt Git **sur une branche nommé `rendu2`**.
+--------
 
 ![](mastermind.jpg)
 
