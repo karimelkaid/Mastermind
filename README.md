@@ -5,12 +5,21 @@ Mastermind
 
 L'objectif de ce projet est de concevoir une application permettant à un joueur de jouer au mastermind contre l'ordinateur.
 
-Prérequis
+Prérequis pour l'installation du Mastermind
 ---------
 
 Pour exécuter l'application, il est nécessaire d'avoir Java 17 ou une version ultérieure installée sur votre système. Cela est dû à l'utilisation de fonctionnalités de Java qui ne sont pas prises en charge par les versions antérieures. Une tentative d'exécution du programme avec une version antérieure de Java peut entraîner l'erreur suivante :
 Erreur : LinkageError lors du chargement de la classe principale Main
 java.lang.UnsupportedClassVersionError: Main has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 55.0
+
+## Guide d'installation du MasterMind
+
+
+**1.** **Télécharger le fichier MindSync.jar**
+
+**2.** **Lancer le fichier (Si le lancement ne se fait pas, compiler le fichier avec la commande : java -jar [nom du fichier])**
+
+**3.** **Profiter du Jeu : Mastermind**
 
 Les règles du jeu
 -----------------
